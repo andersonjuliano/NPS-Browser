@@ -19,7 +19,7 @@ namespace NPS
     {
 
         List<Item> db;
-        string Ordenacao = "ID";
+        //string Ordenacao = "ID";
 
         public Library(List<Item> db)
         {
@@ -30,6 +30,7 @@ namespace NPS
         private void Library_Load(object sender, EventArgs e)
         {
             listView1.Items.Clear();
+            listView2.Items.Clear();
 
             label1.Text = Settings.Instance.downloadDir;
             label3.Text = "";
@@ -205,28 +206,32 @@ namespace NPS
 
             Task.Run(() =>
             {
-                foreach (string url in imagesToLoad)
+                try
                 {
-                    WebClient wc = new WebClient();
-                    wc.Proxy = Settings.Instance.proxy;
-                    wc.Encoding = Encoding.UTF8;
-                    var img = wc.DownloadData(url);
-                    using (var ms = new MemoryStream(img))
+                    foreach (string url in imagesToLoad)
                     {
-                        Image image = Image.FromStream(ms);
-                        image = getThumb(image);
-                        Invoke(new Action(() =>
+
+                        WebClient wc = new WebClient();
+                        wc.Proxy = Settings.Instance.proxy;
+                        wc.Encoding = Encoding.UTF8;
+                        var img = wc.DownloadData(url);
+                        using (var ms = new MemoryStream(img))
                         {
-                            imageList1.Images.Add(url, image);
-                        }));
+                            Image image = Image.FromStream(ms);
+                            image = getThumb(image);
+                            Invoke(new Action(() =>
+                            {
+                                imageList1.Images.Add(url, image);
+                            }));
+                        }
                     }
                 }
-
-
+                catch (Exception)
+                {
+                    //MessageBox.Show(err.Message);
+                }
             });
             label4.Text = listView1.Items.Count + " Jogos";
-
-
         }
 
         public Bitmap getThumb(Image image)

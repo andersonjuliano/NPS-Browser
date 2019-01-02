@@ -29,8 +29,8 @@ namespace NPS
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            PresentationControls.CheckBoxProperties checkBoxProperties3 = new PresentationControls.CheckBoxProperties();
             PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
+            PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,8 +80,6 @@ namespace NPS
             this.splMain = new System.Windows.Forms.SplitContainer();
             this.splList = new System.Windows.Forms.SplitContainer();
             this.pnlSearch = new System.Windows.Forms.Panel();
-            this.cmbType = new PresentationControls.CheckBoxComboBox();
-            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -94,8 +92,9 @@ namespace NPS
             this.chkUnless = new System.Windows.Forms.CheckBox();
             this.chkHideDownloaded = new System.Windows.Forms.CheckBox();
             this.lb_ps3licenseType = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.ResumeAll = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.PauseAll = new System.Windows.Forms.Button();
@@ -103,6 +102,16 @@ namespace NPS
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.timer3 = new System.Windows.Forms.Timer(this.components);
+            this.cmbType = new PresentationControls.CheckBoxComboBox();
+            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
             this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -124,10 +133,18 @@ namespace NPS
             this.pnlSearch.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // mnuMain
@@ -139,7 +156,7 @@ namespace NPS
             this.libraryToolStripMenuItem});
             this.mnuMain.Location = new System.Drawing.Point(0, 0);
             this.mnuMain.Name = "mnuMain";
-            this.mnuMain.Size = new System.Drawing.Size(1143, 24);
+            this.mnuMain.Size = new System.Drawing.Size(1123, 24);
             this.mnuMain.TabIndex = 0;
             this.mnuMain.Text = "menuStrip";
             // 
@@ -254,7 +271,7 @@ namespace NPS
             this.lstTitles.HideSelection = false;
             this.lstTitles.Location = new System.Drawing.Point(0, 52);
             this.lstTitles.Name = "lstTitles";
-            this.lstTitles.Size = new System.Drawing.Size(866, 368);
+            this.lstTitles.Size = new System.Drawing.Size(884, 348);
             this.lstTitles.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstTitles.TabIndex = 1;
             this.lstTitles.UseCompatibleStateImageBehavior = false;
@@ -368,17 +385,17 @@ namespace NPS
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(3, 3);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(584, 20);
+            this.txtSearch.Size = new System.Drawing.Size(541, 20);
             this.txtSearch.TabIndex = 2;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // btnDownload
             // 
             this.btnDownload.Image = global::NPS.Properties.Resources.menu_download;
-            this.btnDownload.Location = new System.Drawing.Point(0, 95);
+            this.btnDownload.Location = new System.Drawing.Point(3, 52);
             this.btnDownload.Margin = new System.Windows.Forms.Padding(0);
             this.btnDownload.Name = "btnDownload";
-            this.btnDownload.Size = new System.Drawing.Size(218, 23);
+            this.btnDownload.Size = new System.Drawing.Size(211, 23);
             this.btnDownload.TabIndex = 3;
             this.btnDownload.Text = "Download and Unpack";
             this.btnDownload.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -425,7 +442,7 @@ namespace NPS
             // ptbCover
             // 
             this.ptbCover.ImageLocation = "";
-            this.ptbCover.Location = new System.Drawing.Point(2, 121);
+            this.ptbCover.Location = new System.Drawing.Point(5, 78);
             this.ptbCover.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.ptbCover.Name = "ptbCover";
             this.ptbCover.Size = new System.Drawing.Size(211, 211);
@@ -437,10 +454,10 @@ namespace NPS
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Location = new System.Drawing.Point(3, 335);
+            this.label5.Location = new System.Drawing.Point(6, 292);
             this.label5.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(243, 65);
+            this.label5.Size = new System.Drawing.Size(177, 104);
             this.label5.TabIndex = 13;
             // 
             // lstDownloadStatusMenuStrip
@@ -514,7 +531,7 @@ namespace NPS
             this.lnkOpenRenaScene.Location = new System.Drawing.Point(2, 403);
             this.lnkOpenRenaScene.Margin = new System.Windows.Forms.Padding(3, 3, 3, 0);
             this.lnkOpenRenaScene.Name = "lnkOpenRenaScene";
-            this.lnkOpenRenaScene.Size = new System.Drawing.Size(246, 17);
+            this.lnkOpenRenaScene.Size = new System.Drawing.Size(208, 17);
             this.lnkOpenRenaScene.TabIndex = 17;
             this.lnkOpenRenaScene.TabStop = true;
             this.lnkOpenRenaScene.Text = "Open Google (screens)";
@@ -528,7 +545,7 @@ namespace NPS
             this.pnlMain.Location = new System.Drawing.Point(0, 24);
             this.pnlMain.Name = "pnlMain";
             this.pnlMain.Padding = new System.Windows.Forms.Padding(6);
-            this.pnlMain.Size = new System.Drawing.Size(1143, 699);
+            this.pnlMain.Size = new System.Drawing.Size(1123, 740);
             this.pnlMain.TabIndex = 18;
             // 
             // splMain
@@ -544,9 +561,9 @@ namespace NPS
             // 
             // splMain.Panel2
             // 
-            this.splMain.Panel2.Controls.Add(this.splitContainer1);
-            this.splMain.Size = new System.Drawing.Size(1131, 687);
-            this.splMain.SplitterDistance = 420;
+            this.splMain.Panel2.Controls.Add(this.tabControl1);
+            this.splMain.Size = new System.Drawing.Size(1111, 728);
+            this.splMain.SplitterDistance = 400;
             this.splMain.TabIndex = 18;
             // 
             // splList
@@ -570,12 +587,11 @@ namespace NPS
             this.splList.Panel2.Controls.Add(this.lb_ps3licenseType);
             this.splList.Panel2.Controls.Add(this.btnDownload);
             this.splList.Panel2.Controls.Add(this.ptbCover);
-            this.splList.Panel2.Controls.Add(this.panel1);
             this.splList.Panel2.Controls.Add(this.lnkOpenRenaScene);
             this.splList.Panel2.Controls.Add(this.label5);
             this.splList.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splList_Panel2_Paint);
-            this.splList.Size = new System.Drawing.Size(1131, 420);
-            this.splList.SplitterDistance = 866;
+            this.splList.Size = new System.Drawing.Size(1111, 400);
+            this.splList.SplitterDistance = 884;
             this.splList.TabIndex = 18;
             // 
             // pnlSearch
@@ -588,61 +604,33 @@ namespace NPS
             this.pnlSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlSearch.Location = new System.Drawing.Point(0, 0);
             this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(866, 52);
+            this.pnlSearch.Size = new System.Drawing.Size(884, 52);
             this.pnlSearch.TabIndex = 17;
-            // 
-            // cmbType
-            // 
-            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties3.AutoSize = true;
-            checkBoxProperties3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties3;
-            this.cmbType.DisplayMemberSingleItem = "";
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Location = new System.Drawing.Point(593, 3);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(152, 21);
-            this.cmbType.TabIndex = 20;
-            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
-            // 
-            // cmbRegion
-            // 
-            this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties1.AutoSize = true;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties1;
-            this.cmbRegion.DisplayMemberSingleItem = "";
-            this.cmbRegion.FormattingEnabled = true;
-            this.cmbRegion.Location = new System.Drawing.Point(751, 3);
-            this.cmbRegion.MaxDropDownItems = 5;
-            this.cmbRegion.Name = "cmbRegion";
-            this.cmbRegion.Size = new System.Drawing.Size(138, 21);
-            this.cmbRegion.TabIndex = 19;
             // 
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel3.Controls.Add(this.lblCount);
             this.flowLayoutPanel3.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel3.Location = new System.Drawing.Point(736, 26);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(698, 26);
             this.flowLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
-            this.flowLayoutPanel3.Size = new System.Drawing.Size(156, 23);
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(181, 23);
             this.flowLayoutPanel3.TabIndex = 18;
             // 
             // lblCount
             // 
-            this.lblCount.Location = new System.Drawing.Point(3, 3);
+            this.lblCount.AutoSize = true;
+            this.lblCount.Dock = System.Windows.Forms.DockStyle.Left;
+            this.lblCount.Location = new System.Drawing.Point(178, 3);
             this.lblCount.Margin = new System.Windows.Forms.Padding(3);
             this.lblCount.Name = "lblCount";
-            this.lblCount.Size = new System.Drawing.Size(150, 17);
+            this.lblCount.Size = new System.Drawing.Size(0, 13);
             this.lblCount.TabIndex = 11;
             this.lblCount.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.Controls.Add(this.label4);
             this.flowLayoutPanel1.Controls.Add(this.rbnGames);
             this.flowLayoutPanel1.Controls.Add(this.rbnAvatars);
@@ -652,7 +640,7 @@ namespace NPS
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 26);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(730, 23);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(391, 23);
             this.flowLayoutPanel1.TabIndex = 17;
             // 
             // rbnAvatars
@@ -696,7 +684,7 @@ namespace NPS
             // rbnDownloaded
             // 
             this.rbnDownloaded.AutoSize = true;
-            this.rbnDownloaded.Location = new System.Drawing.Point(133, 0);
+            this.rbnDownloaded.Location = new System.Drawing.Point(136, 4);
             this.rbnDownloaded.Name = "rbnDownloaded";
             this.rbnDownloaded.Size = new System.Drawing.Size(85, 17);
             this.rbnDownloaded.TabIndex = 24;
@@ -707,7 +695,7 @@ namespace NPS
             // rbnUndownloaded
             // 
             this.rbnUndownloaded.AutoSize = true;
-            this.rbnUndownloaded.Location = new System.Drawing.Point(35, 0);
+            this.rbnUndownloaded.Location = new System.Drawing.Point(38, 4);
             this.rbnUndownloaded.Name = "rbnUndownloaded";
             this.rbnUndownloaded.Size = new System.Drawing.Size(97, 17);
             this.rbnUndownloaded.TabIndex = 23;
@@ -719,7 +707,7 @@ namespace NPS
             // 
             this.rbnAll.AutoSize = true;
             this.rbnAll.Checked = true;
-            this.rbnAll.Location = new System.Drawing.Point(0, 0);
+            this.rbnAll.Location = new System.Drawing.Point(3, 4);
             this.rbnAll.Name = "rbnAll";
             this.rbnAll.Size = new System.Drawing.Size(36, 17);
             this.rbnAll.TabIndex = 22;
@@ -733,7 +721,7 @@ namespace NPS
             this.chkUnless.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.chkUnless.AutoSize = true;
             this.chkUnless.Enabled = false;
-            this.chkUnless.Location = new System.Drawing.Point(17, 23);
+            this.chkUnless.Location = new System.Drawing.Point(3, 25);
             this.chkUnless.Name = "chkUnless";
             this.chkUnless.Size = new System.Drawing.Size(105, 17);
             this.chkUnless.TabIndex = 21;
@@ -745,7 +733,7 @@ namespace NPS
             // 
             this.chkHideDownloaded.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.chkHideDownloaded.AutoSize = true;
-            this.chkHideDownloaded.Location = new System.Drawing.Point(123, 26);
+            this.chkHideDownloaded.Location = new System.Drawing.Point(110, 25);
             this.chkHideDownloaded.Name = "chkHideDownloaded";
             this.chkHideDownloaded.Size = new System.Drawing.Size(109, 17);
             this.chkHideDownloaded.TabIndex = 20;
@@ -762,38 +750,51 @@ namespace NPS
             this.lb_ps3licenseType.Size = new System.Drawing.Size(0, 13);
             this.lb_ps3licenseType.TabIndex = 19;
             // 
-            // panel1
+            // tabControl1
             // 
-            this.panel1.Location = new System.Drawing.Point(2, 62);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(218, 30);
-            this.panel1.TabIndex = 18;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1111, 324);
+            this.tabControl1.TabIndex = 16;
             // 
-            // splitContainer1
+            // tabPage1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.tabPage1.Controls.Add(this.splitContainer2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1103, 298);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Download";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // splitContainer1.Panel1
+            // splitContainer2
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.ResumeAll);
-            this.splitContainer1.Panel1.Controls.Add(this.button5);
-            this.splitContainer1.Panel1.Controls.Add(this.PauseAll);
-            this.splitContainer1.Panel1.Controls.Add(this.button4);
-            this.splitContainer1.Panel1.Controls.Add(this.button3);
-            this.splitContainer1.Panel1.Controls.Add(this.button2);
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer1.Panel2
+            // splitContainer2.Panel1
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.lstDownloadStatus);
-            this.splitContainer1.Size = new System.Drawing.Size(1131, 263);
-            this.splitContainer1.SplitterDistance = 33;
-            this.splitContainer1.TabIndex = 15;
+            this.splitContainer2.Panel1.Controls.Add(this.ResumeAll);
+            this.splitContainer2.Panel1.Controls.Add(this.button5);
+            this.splitContainer2.Panel1.Controls.Add(this.PauseAll);
+            this.splitContainer2.Panel1.Controls.Add(this.button4);
+            this.splitContainer2.Panel1.Controls.Add(this.button3);
+            this.splitContainer2.Panel1.Controls.Add(this.button2);
+            this.splitContainer2.Panel1.Controls.Add(this.button1);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.lstDownloadStatus);
+            this.splitContainer2.Size = new System.Drawing.Size(1097, 292);
+            this.splitContainer2.SplitterDistance = 33;
+            this.splitContainer2.TabIndex = 15;
             // 
             // ResumeAll
             // 
@@ -874,6 +875,107 @@ namespace NPS
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.panel3);
+            this.tabPage2.Controls.Add(this.panel2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1123, 298);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Description";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.richTextBox1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(416, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(704, 292);
+            this.panel3.TabIndex = 8;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(704, 292);
+            this.richTextBox1.TabIndex = 6;
+            this.richTextBox1.Text = "";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.pictureBox1);
+            this.panel2.Controls.Add(this.pictureBox2);
+            this.panel2.Controls.Add(this.pictureBox3);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel2.Location = new System.Drawing.Point(3, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(413, 292);
+            this.panel2.TabIndex = 7;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(120, 129);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Location = new System.Drawing.Point(129, 3);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(280, 129);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 4;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Location = new System.Drawing.Point(127, 138);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(280, 129);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox3.TabIndex = 5;
+            this.pictureBox3.TabStop = false;
+            // 
+            // timer3
+            // 
+            this.timer3.Interval = 1000;
+            // 
+            // cmbType
+            // 
+            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            checkBoxProperties1.AutoSize = true;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties1;
+            this.cmbType.DisplayMemberSingleItem = "";
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Location = new System.Drawing.Point(548, 3);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(166, 21);
+            this.cmbType.TabIndex = 20;
+            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
+            // 
+            // cmbRegion
+            // 
+            this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            checkBoxProperties2.AutoSize = true;
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
+            this.cmbRegion.DisplayMemberSingleItem = "";
+            this.cmbRegion.FormattingEnabled = true;
+            this.cmbRegion.Location = new System.Drawing.Point(720, 3);
+            this.cmbRegion.MaxDropDownItems = 5;
+            this.cmbRegion.Name = "cmbRegion";
+            this.cmbRegion.Size = new System.Drawing.Size(161, 21);
+            this.cmbRegion.TabIndex = 19;
+            // 
             // lstDownloadStatus
             // 
             this.lstDownloadStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -886,7 +988,7 @@ namespace NPS
             this.lstDownloadStatus.HideSelection = false;
             this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
             this.lstDownloadStatus.Name = "lstDownloadStatus";
-            this.lstDownloadStatus.Size = new System.Drawing.Size(1131, 226);
+            this.lstDownloadStatus.Size = new System.Drawing.Size(1097, 255);
             this.lstDownloadStatus.TabIndex = 14;
             this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
             this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
@@ -915,7 +1017,7 @@ namespace NPS
             // NPSBrowser
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1143, 723);
+            this.ClientSize = new System.Drawing.Size(1123, 764);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.mnuMain);
             this.MinimumSize = new System.Drawing.Size(800, 600);
@@ -941,12 +1043,21 @@ namespace NPS
             this.pnlSearch.ResumeLayout(false);
             this.pnlSearch.PerformLayout();
             this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -999,9 +1110,7 @@ namespace NPS
         private System.Windows.Forms.SplitContainer splList;
         private System.Windows.Forms.Panel pnlSearch;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
         private System.Windows.Forms.Label lblCount;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resumeToolStripMenuItem;
@@ -1016,7 +1125,6 @@ namespace NPS
 		private System.Windows.Forms.RadioButton rbnThemes;
 		private System.Windows.Forms.RadioButton rbnUpdates;
 		private System.Windows.Forms.RadioButton rbnAvatars;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
@@ -1036,6 +1144,18 @@ namespace NPS
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sincronizarToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader colDown;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel3;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Timer timer3;
     }
 }
 

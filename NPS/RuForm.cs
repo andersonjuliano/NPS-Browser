@@ -116,6 +116,16 @@ namespace NPS
                         if (apps.Contains(Settings.Instance.downloadDir + "\\app\\" + item.TitleId))
                         {
                             item.down = "S";
+                            Helpers.Renascene myRena =  new Helpers.Renascene(item);
+
+                            if (myRena.imgUrl != null)
+                            {
+                                if (!NPCache.I.renasceneCache.Contains(myRena))
+                                {
+                                    NPCache.I.renasceneCache.Add(myRena);
+
+                                }
+                            }
                         }
                     }
                 }
@@ -689,7 +699,18 @@ namespace NPS
                 {
                     lb_ps3licenseType.Text = "";
                 }
+
+                
+                if (itm.ContentId != currentContentId)
+                {
+                    currentContentId = itm.ContentId;
+                    ShowDescription(itm.ContentId, itm.Region);
+                }
+
+                
             }
+          
+
         }
 
         private void lstTitles_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -998,11 +1019,7 @@ namespace NPS
 
         }
 
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
+        
         private void button5_Click(object sender, EventArgs e)
         {
             if (lstDownloadStatus.SelectedItems.Count == 0) return;
@@ -1097,10 +1114,7 @@ namespace NPS
 
         }
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+       
 
         private void splList_Panel2_Paint(object sender, PaintEventArgs e)
         {
@@ -1189,6 +1203,74 @@ namespace NPS
         {
 
         }
+
+        #region  descrições
+
+        string currentContentId;       
+        private void ShowDescription(string contentId, string region)
+        {
+            
+            switch (region)
+            {
+                case "EU": region = "GB/en"; break;
+                case "US": region = "CA/en"; break;
+                case "JP": region = "JP/ja"; break;
+                case "ASIA": region = "JP/ja"; break;
+            }
+
+            Task.Run(() =>
+            {
+
+                try
+                {
+                    pictureBox1.Image = null;
+                    pictureBox2.Image = null;
+                    pictureBox3.Image = null;
+                    this.Invoke(new Action(() =>
+                    {
+                        //label1.Text = "";
+                        richTextBox1.Text = "";
+
+                        if (contentId == null || contentId.ToLower().Equals("missing"))
+                        {
+                            //isLoading = false;
+                            //pb_status.Image = new Bitmap(Properties.Resources.menu_cancel);
+                            return;
+                        }
+                    }));
+
+                    WebClient wc = new WebClient();
+                    wc.Proxy = Settings.Instance.proxy;
+                    wc.Encoding = System.Text.Encoding.UTF8;
+                    string content = wc.DownloadString(new Uri("https://store.playstation.com/chihiro-api/viewfinder/" + region + "/19/" + contentId));
+                    wc.Dispose();
+                    //content = Encoding.UTF8.GetString(Encoding.Default.GetBytes(content));
+
+                    var contentJson = SimpleJson.SimpleJson.DeserializeObject<PSNJson>(content);
+                    pictureBox1.ImageLocation = contentJson.cover;
+                    pictureBox2.ImageLocation = contentJson.picture1;
+                    pictureBox3.ImageLocation = contentJson.picture2;
+                    this.Invoke(new Action(() =>
+                    {
+                        //pb_status.Visible = false;
+                        richTextBox1.Text = contentJson.desc;
+                        //label1.Text = contentJson.title_name + " (rating: " + contentJson.Stars + "/5.00)";
+                    }));
+                    //isLoading = false;
+                }
+                catch (Exception err)
+                {
+                    //isLoading = false;
+                    this.Invoke(new Action(() =>
+                    {
+                        //pb_status.Visible = true;
+                        //pb_status.Image = new Bitmap(Properties.Resources.menu_cancel);
+                    }));
+                }
+            });
+        }
+
+        #endregion
     }
 
     class Release
