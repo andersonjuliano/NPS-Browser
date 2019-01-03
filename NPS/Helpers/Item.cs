@@ -11,8 +11,9 @@ namespace NPS
     {
         public string TitleId, Region, TitleName, zRif, pkg, Tsize;
         public string down = "N";
+        public string downDLC = "N";
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
-        public int DLCs { get { return DlcItm.Count; } }
+        public int DLCs { get { return DlcItm.Count; } }        
         public List<Item> DlcItm = new List<Item>();
         public string extension
         {

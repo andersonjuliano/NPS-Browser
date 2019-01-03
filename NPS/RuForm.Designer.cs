@@ -31,6 +31,7 @@ namespace NPS
             this.components = new System.ComponentModel.Container();
             PresentationControls.CheckBoxProperties checkBoxProperties1 = new PresentationControls.CheckBoxProperties();
             PresentationControls.CheckBoxProperties checkBoxProperties2 = new PresentationControls.CheckBoxProperties();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NPSBrowser));
             this.mnuMain = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +53,7 @@ namespace NPS
             this.colDLCs = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colLastModified = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDown = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lstTitlesMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.downloadAndUnpackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showTitleDlcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,6 +62,8 @@ namespace NPS
             this.checkForPatchesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleDownloadedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDirgameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDirDLCsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.btnDownload = new System.Windows.Forms.Button();
             this.rbnGames = new System.Windows.Forms.RadioButton();
@@ -80,6 +84,8 @@ namespace NPS
             this.splMain = new System.Windows.Forms.SplitContainer();
             this.splList = new System.Windows.Forms.SplitContainer();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.cmbType = new PresentationControls.CheckBoxComboBox();
+            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -102,6 +108,11 @@ namespace NPS
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
+            this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -110,13 +121,6 @@ namespace NPS
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.timer3 = new System.Windows.Forms.Timer(this.components);
-            this.cmbType = new PresentationControls.CheckBoxComboBox();
-            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
-            this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
-            this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuMain.SuspendLayout();
             this.lstTitlesMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCover)).BeginInit();
@@ -264,7 +268,8 @@ namespace NPS
             this.colType,
             this.colDLCs,
             this.colLastModified,
-            this.colDown});
+            this.colDown,
+            this.colSize});
             this.lstTitles.ContextMenuStrip = this.lstTitlesMenuStrip;
             this.lstTitles.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lstTitles.FullRowSelect = true;
@@ -278,6 +283,7 @@ namespace NPS
             this.lstTitles.View = System.Windows.Forms.View.Details;
             this.lstTitles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lstTitles_ColumnClick);
             this.lstTitles.SelectedIndexChanged += new System.EventHandler(this.lstTitles_SelectedIndexChanged);
+            this.lstTitles.DoubleClick += new System.EventHandler(this.lstTitles_DoubleClick);
             this.lstTitles.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstTitles_KeyDown);
             this.lstTitles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstTitles_MouseClick);
             // 
@@ -299,20 +305,29 @@ namespace NPS
             // colType
             // 
             this.colType.Text = "Type";
+            this.colType.Width = 50;
             // 
             // colDLCs
             // 
             this.colDLCs.Text = "DLCs";
+            this.colDLCs.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.colDLCs.Width = 46;
             // 
             // colLastModified
             // 
             this.colLastModified.Text = "Last Modified";
-            this.colLastModified.Width = 144;
+            this.colLastModified.Width = 123;
             // 
             // colDown
             // 
-            this.colDown.Text = "Down";
-            this.colDown.Width = 40;
+            this.colDown.Text = "Lib";
+            this.colDown.Width = 28;
+            // 
+            // colSize
+            // 
+            this.colSize.Text = "Size";
+            this.colSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.colSize.Width = 76;
             // 
             // lstTitlesMenuStrip
             // 
@@ -323,9 +338,12 @@ namespace NPS
             this.downloadAllToolStripMenuItem,
             this.checkForPatchesToolStripMenuItem,
             this.toggleDownloadedToolStripMenuItem,
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.openDirgameToolStripMenuItem,
+            this.openDirDLCsToolStripMenuItem});
             this.lstTitlesMenuStrip.Name = "contextMenuStrip2";
-            this.lstTitlesMenuStrip.Size = new System.Drawing.Size(198, 158);
+            this.lstTitlesMenuStrip.Size = new System.Drawing.Size(198, 202);
+            this.lstTitlesMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.lstTitlesMenuStrip_Opening);
             // 
             // downloadAndUnpackToolStripMenuItem
             // 
@@ -378,6 +396,20 @@ namespace NPS
             this.toolStripMenuItem1.Size = new System.Drawing.Size(197, 22);
             this.toolStripMenuItem1.Text = "Download CompPack";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // openDirgameToolStripMenuItem
+            // 
+            this.openDirgameToolStripMenuItem.Name = "openDirgameToolStripMenuItem";
+            this.openDirgameToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.openDirgameToolStripMenuItem.Text = "Open Dir (game)";
+            this.openDirgameToolStripMenuItem.Click += new System.EventHandler(this.openDirgameToolStripMenuItem_Click);
+            // 
+            // openDirDLCsToolStripMenuItem
+            // 
+            this.openDirDLCsToolStripMenuItem.Name = "openDirDLCsToolStripMenuItem";
+            this.openDirDLCsToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.openDirDLCsToolStripMenuItem.Text = "Open Dir (DLCs)";
+            this.openDirDLCsToolStripMenuItem.Click += new System.EventHandler(this.openDirDLCsToolStripMenuItem_Click);
             // 
             // txtSearch
             // 
@@ -606,6 +638,34 @@ namespace NPS
             this.pnlSearch.Name = "pnlSearch";
             this.pnlSearch.Size = new System.Drawing.Size(884, 52);
             this.pnlSearch.TabIndex = 17;
+            // 
+            // cmbType
+            // 
+            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            checkBoxProperties1.AutoSize = true;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties1;
+            this.cmbType.DisplayMemberSingleItem = "";
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Location = new System.Drawing.Point(548, 3);
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(166, 21);
+            this.cmbType.TabIndex = 20;
+            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
+            // 
+            // cmbRegion
+            // 
+            this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            checkBoxProperties2.AutoSize = true;
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
+            this.cmbRegion.DisplayMemberSingleItem = "";
+            this.cmbRegion.FormattingEnabled = true;
+            this.cmbRegion.Location = new System.Drawing.Point(720, 3);
+            this.cmbRegion.MaxDropDownItems = 5;
+            this.cmbRegion.Name = "cmbRegion";
+            this.cmbRegion.Size = new System.Drawing.Size(161, 21);
+            this.cmbRegion.TabIndex = 19;
             // 
             // flowLayoutPanel3
             // 
@@ -875,6 +935,44 @@ namespace NPS
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
             // 
+            // lstDownloadStatus
+            // 
+            this.lstDownloadStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colDownloadTitle,
+            this.colDownloadSpeed,
+            this.colDownloadStatus,
+            this.colDownloadProgress});
+            this.lstDownloadStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstDownloadStatus.FullRowSelect = true;
+            this.lstDownloadStatus.HideSelection = false;
+            this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
+            this.lstDownloadStatus.Name = "lstDownloadStatus";
+            this.lstDownloadStatus.Size = new System.Drawing.Size(1097, 255);
+            this.lstDownloadStatus.TabIndex = 14;
+            this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
+            this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
+            this.lstDownloadStatus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstDownloadStatus_KeyDown);
+            // 
+            // colDownloadTitle
+            // 
+            this.colDownloadTitle.Text = "Title";
+            this.colDownloadTitle.Width = 457;
+            // 
+            // colDownloadSpeed
+            // 
+            this.colDownloadSpeed.Text = "Speed";
+            this.colDownloadSpeed.Width = 112;
+            // 
+            // colDownloadStatus
+            // 
+            this.colDownloadStatus.Text = "Status";
+            this.colDownloadStatus.Width = 100;
+            // 
+            // colDownloadProgress
+            // 
+            this.colDownloadProgress.Text = "Progress";
+            this.colDownloadProgress.Width = 366;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.panel3);
@@ -882,7 +980,7 @@ namespace NPS
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1123, 298);
+            this.tabPage2.Size = new System.Drawing.Size(1103, 298);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Description";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -893,7 +991,7 @@ namespace NPS
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(416, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(704, 292);
+            this.panel3.Size = new System.Drawing.Size(684, 292);
             this.panel3.TabIndex = 8;
             // 
             // richTextBox1
@@ -902,7 +1000,7 @@ namespace NPS
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(704, 292);
+            this.richTextBox1.Size = new System.Drawing.Size(684, 292);
             this.richTextBox1.TabIndex = 6;
             this.richTextBox1.Text = "";
             // 
@@ -948,78 +1046,13 @@ namespace NPS
             // 
             this.timer3.Interval = 1000;
             // 
-            // cmbType
-            // 
-            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties1.AutoSize = true;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties1;
-            this.cmbType.DisplayMemberSingleItem = "";
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Location = new System.Drawing.Point(548, 3);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(166, 21);
-            this.cmbType.TabIndex = 20;
-            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
-            // 
-            // cmbRegion
-            // 
-            this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties2.AutoSize = true;
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
-            this.cmbRegion.DisplayMemberSingleItem = "";
-            this.cmbRegion.FormattingEnabled = true;
-            this.cmbRegion.Location = new System.Drawing.Point(720, 3);
-            this.cmbRegion.MaxDropDownItems = 5;
-            this.cmbRegion.Name = "cmbRegion";
-            this.cmbRegion.Size = new System.Drawing.Size(161, 21);
-            this.cmbRegion.TabIndex = 19;
-            // 
-            // lstDownloadStatus
-            // 
-            this.lstDownloadStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colDownloadTitle,
-            this.colDownloadSpeed,
-            this.colDownloadStatus,
-            this.colDownloadProgress});
-            this.lstDownloadStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstDownloadStatus.FullRowSelect = true;
-            this.lstDownloadStatus.HideSelection = false;
-            this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
-            this.lstDownloadStatus.Name = "lstDownloadStatus";
-            this.lstDownloadStatus.Size = new System.Drawing.Size(1097, 255);
-            this.lstDownloadStatus.TabIndex = 14;
-            this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
-            this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
-            this.lstDownloadStatus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstDownloadStatus_KeyDown);
-            // 
-            // colDownloadTitle
-            // 
-            this.colDownloadTitle.Text = "Title";
-            this.colDownloadTitle.Width = 457;
-            // 
-            // colDownloadSpeed
-            // 
-            this.colDownloadSpeed.Text = "Speed";
-            this.colDownloadSpeed.Width = 112;
-            // 
-            // colDownloadStatus
-            // 
-            this.colDownloadStatus.Text = "Status";
-            this.colDownloadStatus.Width = 100;
-            // 
-            // colDownloadProgress
-            // 
-            this.colDownloadProgress.Text = "Progress";
-            this.colDownloadProgress.Width = 366;
-            // 
             // NPSBrowser
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1123, 764);
             this.Controls.Add(this.pnlMain);
             this.Controls.Add(this.mnuMain);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "NPSBrowser";
             this.Text = "NPS Browser";
@@ -1156,6 +1189,9 @@ namespace NPS
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Timer timer3;
+        private System.Windows.Forms.ColumnHeader colSize;
+        private System.Windows.Forms.ToolStripMenuItem openDirgameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openDirDLCsToolStripMenuItem;
     }
 }
 

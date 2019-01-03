@@ -104,6 +104,8 @@ namespace NPS
             sync.Sync((g) =>
             {
                 databaseAll = g;
+                var dlcsDbs = GetDatabase("DLC").ToArray();
+
                 string[] apps = new string[0];
                 if (Directory.Exists(Settings.Instance.downloadDir + "\\app"))
                 {
@@ -116,20 +118,32 @@ namespace NPS
                         if (apps.Contains(Settings.Instance.downloadDir + "\\app\\" + item.TitleId))
                         {
                             item.down = "S";
-                            Helpers.Renascene myRena =  new Helpers.Renascene(item);
-
-                            if (myRena.imgUrl != null)
+                            Task.Run(() =>
                             {
-                                if (!NPCache.I.renasceneCache.Contains(myRena))
+                                Helpers.Renascene myRena = new Helpers.Renascene(item);
+                                if (myRena.imgUrl != null)
                                 {
-                                    NPCache.I.renasceneCache.Add(myRena);
-
+                                    if (!NPCache.I.renasceneCache.Contains(myRena))
+                                    {
+                                        NPCache.I.renasceneCache.Add(myRena);
+                                    }
                                 }
-                            }
+                            });
                         }
+                        //verifica se tem DLC no disco
+                        if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont\\" + item.TitleId))
+                        {
+                            //pega o total de DLC
+                            if (!item.IsAvatar && !item.IsDLC && !item.IsTheme && !item.IsUpdate && !item.ItsPsx)
+                                item.CalculateDlCs(dlcsDbs);
+                            //se tiver todos os DLC, marca como OK
+                            if (Directory.GetDirectories(Settings.Instance.downloadDir + "\\addcont\\" + item.TitleId).Length == item.DLCs)
+                            {
+                                item.downDLC = "S";
+                            }
+                        }                        
                     }
-                }
-               
+                }              
 
                 Invoke(new Action(() =>
                 {
@@ -320,8 +334,13 @@ namespace NPS
                     if (newdlc > 0) a.BackColor = ColorTranslator.FromHtml("#E700E7");
                     else a.BackColor = ColorTranslator.FromHtml("#B7FF7C");
                 }
-                
-                              a.SubItems.Add(item.Region);
+                if (a.BackColor == ColorTranslator.FromHtml("#E700E7") &&  item.downDLC == "S")
+                {
+                    a.BackColor = ColorTranslator.FromHtml("#B7FF7C");
+                }
+
+
+                a.SubItems.Add(item.Region);
                 a.SubItems.Add(item.TitleName);
                 a.SubItems.Add(item.contentType);
                 if (item.DLCs > 0)
@@ -331,6 +350,7 @@ namespace NPS
                     a.SubItems.Add(item.lastModifyDate.ToString());
                 else a.SubItems.Add("");
                 a.SubItems.Add(item.down);
+                a.SubItems.Add(item.Tsize);
 
                 a.Tag = item;
                 list.Add(a);
@@ -1204,7 +1224,7 @@ namespace NPS
 
         }
 
-        #region  descrições
+        #region << load description >>
 
         string currentContentId;       
         private void ShowDescription(string contentId, string region)
@@ -1271,6 +1291,61 @@ namespace NPS
         }
 
         #endregion
+
+        private void lstTitles_DoubleClick(object sender, EventArgs e)
+        {
+            if (Directory.Exists(Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId))
+            {
+                string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
+                System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+            }
+            else
+            {
+                MessageBox.Show("Game não encontrado.");
+            }            
+        }
+
+        private void openDirgameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId))
+            {
+                string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
+                System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+            }
+            else
+            {
+                MessageBox.Show("Game não encontrado.");
+            }
+        }
+
+        private void openDirDLCsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId))
+            {
+                string path = Settings.Instance.downloadDir + "\\addcont\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
+                System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+            }
+            else
+            {
+                MessageBox.Show("DLCs não encontrado.");
+            }
+        }
+
+        private void lstTitlesMenuStrip_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            openDirgameToolStripMenuItem.Enabled = true;
+            openDirDLCsToolStripMenuItem.Enabled = true;
+
+            if ((lstTitles.SelectedItems[0].Tag as NPS.Item).down=="N")
+            {
+                openDirgameToolStripMenuItem.Enabled = false;
+            }
+            if ((lstTitles.SelectedItems[0].Tag as NPS.Item).downDLC == "N")
+            {
+                openDirDLCsToolStripMenuItem.Enabled = false;
+            }
+
+        }
     }
 
     class Release
