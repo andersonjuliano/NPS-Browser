@@ -26,7 +26,6 @@ namespace NPS
             InitializeComponent();
             this.db = db;
         }
-
         private void Library_Load(object sender, EventArgs e)
         {
             listView1.Items.Clear();
@@ -42,6 +41,9 @@ namespace NPS
 
             string SourcePath = Settings.Instance.downloadDir + "\\app";
             string DestinationPath = textBox2.Text + ":\\app";
+
+            string SourcePathDLC = Settings.Instance.downloadDir + "\\addcont";
+            string DestinationPathDLC = textBox2.Text + ":\\addcont";
 
 
             if (Directory.Exists(Settings.Instance.downloadDir + "\\packages"))
@@ -64,7 +66,7 @@ namespace NPS
                 dlcs = Directory.GetDirectories(Settings.Instance.downloadDir + "\\addcont");
             }
 
-            
+
 
             List<string> imagesToLoad = new List<string>();
 
@@ -119,21 +121,45 @@ namespace NPS
                 foreach (var itm in db)
                 {
                     if (!itm.IsDLC)
-                        if (itm.TitleId.Equals(d))                            
+                        if (itm.TitleId.Equals(d))
                         {
                             bool SD = false;
                             string Nname = itm.TitleName + "\n\r" + itm.TitleId + "\n\r" + itm.Tsize + " MB";
+                            if (itm.DLCs > 0)
+                            {
+                                if (Directory.Exists(SourcePathDLC + "\\" + itm.TitleId))
+                                {
+                                    Nname += "\n\r" + Directory.GetDirectories(SourcePathDLC + "\\" + itm.TitleId).Length + "/" + itm.DLCs + " DLC";
+                                }
+                                else
+                                {
+                                    Nname += "\n\r" + "0/" + itm.DLCs + " DLC";
+
+                                }
+
+                            }
                             if (appsSD.Length > 0)
                             {
                                 if (appsSD.Contains(s.Replace(SourcePath, DestinationPath)))
                                 {
-                                    Nname = Nname + "\n\rNo SD";
+                                    Nname = Nname + "\n\rSD - GAME";
                                     SD = true;
                                 }
-                                   
-
+                                if (itm.DLCs > 0)
+                                {
+                                    if (Directory.Exists(DestinationPathDLC + "\\" + itm.TitleId))
+                                    {
+                                        //if (Directory.GetDirectories(SourcePathDLC + itm.TitleId).Length == itm.DLCs)
+                                        int i = Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Length;
+                                        if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_pfs"))
+                                            i -= 1;
+                                        if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_sys"))
+                                            i -= 1;
+                                        Nname += " / " + i + " DLC";
+                                    }
+                                }
                             }
-                            
+
                             ListViewItem lvi = new ListViewItem(Nname);
                             if (SD)
                             {
@@ -233,7 +259,6 @@ namespace NPS
             });
             label4.Text = listView1.Items.Count + " Jogos";
         }
-
         public Bitmap getThumb(Image image)
         {
             int tw, th, tx, ty;
@@ -313,23 +338,32 @@ namespace NPS
         private void button5_Click(object sender, EventArgs e)
         {
             if (listView1.Items.Count == 0) return;
-                        if (listView1.Sorting == SortOrder.None || listView1.Sorting == SortOrder.Descending)
+            if (listView1.Sorting == SortOrder.None || listView1.Sorting == SortOrder.Descending)
             {
                 listView1.Sorting = SortOrder.Ascending;
-                            }
+            }
             else
             {
-              
-                    listView1.Sorting = SortOrder.Descending;
-               
+
+                listView1.Sorting = SortOrder.Descending;
+
             }
             listView1.Refresh();
         }
         private void button6_Click(object sender, EventArgs e)
         {
+            copyGame();
+            copyDLC(false);
+        }
+        private void button7_Click(object sender, EventArgs e)
+        {
+            copyDLC(true);
+        }
+
+        private void copyGame() { 
             if (listView1.SelectedItems.Count == 0) return;
             if (textBox2.Text == "") return;
-            label3.Text = "Aguarde, copiando jogo " + (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleName;
+            label3.Text = "Wait, copy game " + (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleName;
 
             string path = (listView1.SelectedItems[0].Tag as LibraryItem).path;
             //System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
@@ -370,6 +404,64 @@ namespace NPS
 
 
         }
+        private void copyDLC(Boolean msg) { 
+            string SourcePath = (listView1.SelectedItems[0].Tag as LibraryItem).path.Replace("\\app\\", "\\addcont\\");
+            string DestinationPath = textBox2.Text + ":\\addcont\\" + (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleId;
+
+            if (listView1.SelectedItems.Count == 0) return;
+            if (textBox2.Text == "")
+            {
+                if(msg) label3.Text = "Informe o SD";
+                return;
+            }
+            if (!Directory.Exists(SourcePath) || Directory.GetDirectories(SourcePath).Length == 0)
+            {
+                if (msg) label3.Text = "DLCs não encontradas";
+                return;
+            }
+
+            //verifica se os DLC já estão no SD
+            if (System.IO.Directory.Exists(DestinationPath))
+            {
+                if (Directory.GetDirectories(DestinationPath).Length == (listView1.SelectedItems[0].Tag as LibraryItem).itm.DLCs)
+                {
+                    if (msg) label3.Text = "Todas as DLCs já estão no SD";
+                    return;
+                }
+            }
+
+
+            label3.Text = "Wait, copy DLC " + (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleName;
+            //string path = (listView1.SelectedItems[0].Tag as LibraryItem).path;
+            //System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+
+            if (!Directory.Exists(DestinationPath))
+            {
+                System.IO.Directory.CreateDirectory(DestinationPath);
+            }
+
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(SourcePath, "*", SearchOption.AllDirectories))
+            {
+                label3.Text = (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleName + " Copiando diretorio " + dirPath.Replace(SourcePath, "");
+                label3.Refresh();
+                Directory.CreateDirectory(dirPath.Replace(SourcePath, DestinationPath));
+            }
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(SourcePath, "*.*", SearchOption.AllDirectories))
+            {
+                label3.Text = (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleName + " Copiando arquivo " + newPath.Replace(SourcePath, "");
+                label3.Refresh();
+                File.Copy(newPath, newPath.Replace(SourcePath, DestinationPath), true);
+
+            }
+            string temp = (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleName;
+            Library_Load(null, null);
+            label3.Text = "Jogo copiado para o SD - " + temp;
+            label3.Refresh();
+
+        }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -381,7 +473,19 @@ namespace NPS
         {
 
         }
-     
+        private void openDirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0) return;
+            string path = (listView1.SelectedItems[0].Tag as LibraryItem).path;
+            System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+
+        }
+        private void openDirDLCToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count == 0) return;
+            string path = (listView1.SelectedItems[0].Tag as LibraryItem).path.Replace("\\app\\","\\addcont\\");
+            System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+        }
     }
 
     class LibraryItem

@@ -42,6 +42,9 @@
             System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("test", "(none)");
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openDirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDirDLCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -57,12 +60,15 @@
             this.button6 = new System.Windows.Forms.Button();
             this.listView2 = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.button7 = new System.Windows.Forms.Button();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // listView1
             // 
             this.listView1.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
+            this.listView1.ContextMenuStrip = this.contextMenuStrip1;
             this.listView1.FullRowSelect = true;
             this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1,
@@ -81,7 +87,29 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "";
-            this.columnHeader1.Width = 450;
+            this.columnHeader1.Width = 444;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openDirToolStripMenuItem,
+            this.openDirDLCToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(163, 48);
+            // 
+            // openDirToolStripMenuItem
+            // 
+            this.openDirToolStripMenuItem.Name = "openDirToolStripMenuItem";
+            this.openDirToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.openDirToolStripMenuItem.Text = "Open Dir (game)";
+            this.openDirToolStripMenuItem.Click += new System.EventHandler(this.openDirToolStripMenuItem_Click);
+            // 
+            // openDirDLCToolStripMenuItem
+            // 
+            this.openDirDLCToolStripMenuItem.Name = "openDirDLCToolStripMenuItem";
+            this.openDirDLCToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.openDirDLCToolStripMenuItem.Text = "Open Dir (DLC)";
+            this.openDirDLCToolStripMenuItem.Click += new System.EventHandler(this.openDirDLCToolStripMenuItem_Click);
             // 
             // imageList1
             // 
@@ -215,7 +243,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(73, 42);
             this.button6.TabIndex = 11;
-            this.button6.Text = "Copiar SD";
+            this.button6.Text = "Copy Game";
             this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
@@ -241,13 +269,27 @@
             // columnHeader2
             // 
             this.columnHeader2.Text = "";
-            this.columnHeader2.Width = 450;
+            this.columnHeader2.Width = 441;
+            // 
+            // button7
+            // 
+            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button7.Image = global::NPS.Properties.Resources.menu_download;
+            this.button7.Location = new System.Drawing.Point(957, 337);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(73, 42);
+            this.button7.TabIndex = 13;
+            this.button7.Text = "Copy DLC";
+            this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // Library
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1033, 653);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.listView2);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.label4);
@@ -265,6 +307,7 @@
             this.Name = "Library";
             this.Text = "Library";
             this.Load += new System.EventHandler(this.Library_Load);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,5 +332,9 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ListView listView2;
         private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem openDirToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openDirDLCToolStripMenuItem;
     }
 }
