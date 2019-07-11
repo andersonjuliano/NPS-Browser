@@ -209,9 +209,7 @@ namespace NPS
             //        if (itm.IsDLC && itm.TitleId.Equals(d))
             //        {
             //            ListViewItem lvi = new ListViewItem(itm.TitleName);
-
             //            listView1.Items.Add(lvi);
-
             //            foreach (var r in NPCache.I.renasceneCache)
             //                if (itm == r.itm)
             //                {

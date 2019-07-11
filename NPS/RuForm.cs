@@ -950,7 +950,6 @@ namespace NPS
                 foreach (var ren in NPCache.I.renasceneCache)
                 {
                     if (itm.Equals(ren.itm)) myRena = ren;
-
                 }
 
                 Task.Run(() =>
