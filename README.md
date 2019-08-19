@@ -7,9 +7,10 @@ Novos funcionalidades:
 - no form principal
   - coloquei no form principal as funções que estavam anteriormente no "description panel"
   - inclui no datagridview os campos:
-    - tamanho (somente está implementado nos jogos do vita)
+    - tamanho do jogo/DLC/Thema
     - lib - que indica se o jogo está na biblioteca
     - doubleclick no jogo irá abrir a pasta no windows explorer
+  -
 - na Libary
   - informação se um jogo tem DLC  
   - um segundo listview monstrando os jogos que já estão no vita (precisa configurar o caminho do vita)  
