@@ -17,20 +17,32 @@ public class Settings
     public int simultaneousDl = 2;
 
     // Game URIs
-    public string PSVUri, PSMUri, PSXUri, PSPUri, PS3Uri, PS4Uri;
+    public string PSVUri = "https://nopaystation.com/tsv/PSV_GAMES.tsv";
+    public string PSMUri = "https://nopaystation.com/tsv/PSM_GAMES.tsv";
+    public string PSXUri = "https://nopaystation.com/tsv/PSX_GAMES.tsv";
+    public string PSPUri = "https://nopaystation.com/tsv/PSP_GAMES.tsv";
+    public string PS3Uri = "https://nopaystation.com/tsv/PS3_GAMES.tsv";
+    public string PS4Uri = "";
 
     // Avatar URIs
-    public string PS3AvatarUri;
+    public string PS3AvatarUri= "https://nopaystation.com/tsv/PS3_AVATARS.tsv";
 
     // DLC URIs
-    public string PSVDLCUri, PSPDLCUri, PS3DLCUri, PS4DLCUri;
+    public string PSVDLCUri  = "https://nopaystation.com/tsv/PSV_DLCS.tsv";
+    public string PSPDLCUri = "https://nopaystation.com/tsv/PSP_DLCS.tsv";
+    public string PS3DLCUri = "https://nopaystation.com/tsv/PS3_DLCS.tsv";
+    public string PS4DLCUri = "";
 
     // Theme URIs
-    public string PSVThemeUri, PSPThemeUri, PS3ThemeUri, PS4ThemeUri;
+    public string PSVThemeUri = "https://nopaystation.com/tsv/PSV_THEMES.tsv";
+    public string PSPThemeUri = "https://nopaystation.com/tsv/PSP_THEMES.tsv";
+    public string PS3ThemeUri = "https://nopaystation.com/tsv/PS3_THEMES.tsv";
+    public string PS4ThemeUri = "";
 
     public string HMACKey = "";
     // Update URIs
-    public string PSVUpdateUri, PS4UpdateUri;
+    public string PSVUpdateUri = "https://nopaystation.com/tsv/PSV_UPDATES.tsv";
+    public string PS4UpdateUri = "";
     public List<string> selectedRegions = new List<string>(), selectedTypes = new List<string>();
 
     public WebProxy proxy;
@@ -123,7 +135,22 @@ public class Settings
             s.PS4ThemeUri = Registry.GetValue(keyName, "PS4ThemeUri", "")?.ToString();
             s.PSVUpdateUri = Registry.GetValue(keyName, "UpdateUri", "")?.ToString();
             s.PS4UpdateUri = Registry.GetValue(keyName, "PS4UpdateUri", "")?.ToString();
-        }
+
+
+                                   if (s.PSVUri == null) s.PSVUri = "https://nopaystation.com/tsv/PSV_GAMES.tsv";
+            if (s.PSMUri == null) s.PSMUri = "https://nopaystation.com/tsv/PSM_GAMES.tsv";
+            if (s.PSXUri == null) s.PSXUri = "https://nopaystation.com/tsv/PSX_GAMES.tsv";
+            if (s.PSPUri == null) s.PSPUri = "https://nopaystation.com/tsv/PSP_GAMES.tsv";
+            if (s.PS3Uri == null) s.PS3Uri = "https://nopaystation.com/tsv/PS3_GAMES.tsv";
+            if (s.PS3AvatarUri == null) s.PS3AvatarUri = "https://nopaystation.com/tsv/PS3_AVATARS.tsv";
+            if (s.PSVDLCUri == null) s.PSVDLCUri = "https://nopaystation.com/tsv/PSV_DLCS.tsv";
+            if (s.PSPDLCUri == null) s.PSPDLCUri = "https://nopaystation.com/tsv/PSP_DLCS.tsv";
+            if (s.PS3DLCUri == null) s.PS3DLCUri = "https://nopaystation.com/tsv/PS3_DLCS.tsv";
+            if (s.PSVThemeUri == null) s.PSVThemeUri = "https://nopaystation.com/tsv/PSV_THEMES.tsv";
+            if (s.PSPThemeUri == null) s.PSPThemeUri = "https://nopaystation.com/tsv/PSP_THEMES.tsv";
+            if (s.PS3ThemeUri == null) s.PS3ThemeUri = "https://nopaystation.com/tsv/PS3_THEMES.tsv";
+            if (s.PSVUpdateUri == null) s.PSVUpdateUri = "https://nopaystation.com/tsv/PSV_UPDATES.tsv";
+}
 
         return s;
     }

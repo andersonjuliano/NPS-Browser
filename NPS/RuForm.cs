@@ -42,7 +42,7 @@ namespace NPS
             this.Icon = Properties.Resources._8_512;
             new Settings();
 
-            if (string.IsNullOrEmpty(Settings.Instance.PSVUri) && string.IsNullOrEmpty(Settings.Instance.PSVDLCUri))
+            if (string.IsNullOrEmpty(Settings.Instance.PSVUri) || string.IsNullOrEmpty(Settings.Instance.PSVDLCUri) || string.IsNullOrEmpty(Settings.Instance.downloadDir) )
             {
                 MessageBox.Show("Application did not provide any links to external files or decrypt mechanism.\r\nYou need to specify tsv (tab splitted text) file with your personal links to pkg files on your own.\r\n\r\nFormat: TitleId Region Name Pkg Key", "Disclaimer!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Options o = new Options(this);
@@ -209,6 +209,8 @@ namespace NPS
             foreach (string s in types)
                 cmbType.Items.Add(s);
 
+                   
+
             foreach (string s in regions)
                 cmbRegion.Items.Add(s);
 
@@ -350,7 +352,11 @@ namespace NPS
                     a.SubItems.Add(item.lastModifyDate.ToString());
                 else a.SubItems.Add("");
                 a.SubItems.Add(item.down);
-                a.SubItems.Add(item.Tsize);
+                a.SubItems.Add(item.Tsize.ToString());
+
+                //if (item.Tsize > 0)
+                //    a.SubItems.Add(item.Tsize.ToString());
+                //else a.SubItems.Add("");
 
                 a.Tag = item;
                 list.Add(a);
@@ -1293,15 +1299,15 @@ namespace NPS
 
         private void lstTitles_DoubleClick(object sender, EventArgs e)
         {
-            if (Directory.Exists(Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId))
-            {
-                string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
-                System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
-            }
-            else
-            {
-                MessageBox.Show("Game não encontrado.");
-            }            
+            //if (Directory.Exists(Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId))
+            //{
+            //    string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
+            //    System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Game não encontrado.", "Aviso",  MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}            
         }
 
         private void openDirgameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1344,6 +1350,34 @@ namespace NPS
                 openDirDLCsToolStripMenuItem.Enabled = false;
             }
 
+        }
+
+        private void renameGamesFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {        
+            string[] apps = new string[0];
+            if (Directory.Exists(Settings.Instance.downloadDir + "\\app"))
+            {
+                apps = Directory.GetDirectories(Settings.Instance.downloadDir + "\\app");
+            }
+
+            foreach (string s in apps)
+            {
+                string d = Path.GetFullPath(s).TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar).Last();
+                string pathNew = s.Replace( d, "");
+
+                foreach (var itm in currentDatabase)
+                {
+                    if (!itm.IsDLC)
+                    {
+                        if (itm.TitleId.Equals(d))
+                        {
+                            pathNew += itm.TitleName + " [" + itm.TitleId + "]";
+                            Directory.Move(s, pathNew);                           
+                        }
+                    }
+                }
+            }
+            MessageBox.Show("Todos as pastas de jogos foram renomeadas", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 

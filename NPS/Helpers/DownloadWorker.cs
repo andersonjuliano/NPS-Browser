@@ -239,6 +239,7 @@ namespace NPS
                 unpackProcess.EnableRaisingEvents = true;
                 unpackProcess.Exited += Proc_Exited;
                 unpackProcess.ErrorDataReceived += new DataReceivedEventHandler(UnpackProcess_ErrorDataReceived);
+                unpackProcess.Exited += new EventHandler(UnpackProcess_Exited);
                 errors = new List<string>();
                 unpackProcess.Start();
                 unpackProcess.BeginErrorReadLine();
@@ -300,14 +301,14 @@ namespace NPS
                 try
                 {
                     lvi.SubItems[2].Text = "Processing";
-                    string path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "packages";
+                    string path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar +  currentDownload.TitleName + " [" + currentDownload.TitleId + "]" + Path.DirectorySeparatorChar + "packages" ;
                     if (!Directory.Exists(path))
                     {
                         Directory.CreateDirectory(path);
                     }
                     File.Move(Settings.Instance.downloadDir + Path.DirectorySeparatorChar + currentDownload.DownloadFileName + currentDownload.extension, path + Path.DirectorySeparatorChar + currentDownload.DownloadFileName + currentDownload.extension);
 
-                    path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "exdata";
+                     path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar +  currentDownload.TitleName + " [" + currentDownload.TitleId + "]" + Path.DirectorySeparatorChar + "exdata";
 
                     if (!string.IsNullOrEmpty(currentDownload.ContentId) && currentDownload.ContentId.ToLower() != "missing" && currentDownload.zRif.ToLower() != "NOT REQUIRED".ToLower() && currentDownload.zRif.Length % 2 == 0)
                     {
@@ -347,6 +348,27 @@ namespace NPS
         {
             errors.Add(e.Data);
         }
+
+        private void UnpackProcess_Exited(object sender, System.EventArgs e)
+        {
+            try
+            {
+                string path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + currentDownload.TitleId;
+                if (Directory.Exists(path))
+                {
+                    string pathNew = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + currentDownload.TitleName + " [" + currentDownload.TitleId + "]";
+                    Directory.Move(path, pathNew);
+
+                }
+
+            }
+            catch (Exception err)
+            {
+                lvi.SubItems[1].Text = "Error!";
+                lvi.SubItems[2].Text = err.Message;
+            }
+        }
+
 
         private void Proc_Exited(object sender, EventArgs e)
         {

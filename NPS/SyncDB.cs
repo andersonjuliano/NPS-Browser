@@ -188,7 +188,8 @@ namespace NPS
                                 {
                                     if (a[8].All(char.IsNumber) && a[8] != "")
                                     {
-                                        itm.Tsize = (Math.Round( decimal.Parse(a[8]) / 1024 / 1024,2)).ToString();
+                                        //itm.Tsize = (Math.Round( decimal.Parse(a[8]) / 1024 / 1024,2)).ToString();
+                                        itm.Tsize = Math.Round(decimal.Parse(a[8]) / 1024 / 1024,2);
                                     }
                                 }
                             }
@@ -202,7 +203,8 @@ namespace NPS
                                 {
                                     if (a[7].All(char.IsNumber) &&  a[7] != "")
                                     {
-                                        itm.Tsize = (Int64.Parse(a[7]) / 1024 / 1024).ToString();
+                                        //itm.Tsize = (Int64.Parse(a[7]) / 1024 / 1024).ToString();
+                                        itm.Tsize = Math.Round((decimal.Parse(a[7]) / 1024 / 1024),2);
                                     }
                                 }
                             }
@@ -215,7 +217,7 @@ namespace NPS
                                 {
                                     if (a[7].All(char.IsNumber))
                                     {
-                                        itm.Tsize = (Int64.Parse(a[7]) / 1024 / 1024).ToString();
+                                        itm.Tsize = Math.Round((decimal.Parse(a[7]) / 1024 / 1024),2);
                                     }
                                 }
                             }
@@ -243,6 +245,13 @@ namespace NPS
                                 itm.ContentId = a[5];
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
                                 itm.zRif = a[7];
+                                if (a.Length > 10)
+                                {
+                                    if (a[9].All(char.IsNumber))
+                                    {
+                                        itm.Tsize = Math.Round((decimal.Parse(a[9]) / 1024 / 1024), 2);
+                                    }
+                                }
                             }
                             else if (dbType == DatabaseType.PSPDLC)
                             {
@@ -253,6 +262,13 @@ namespace NPS
                                 itm.ContentId = a[4];
                                 DateTime.TryParse(a[5], out itm.lastModifyDate);
                                 itm.zRif = a[6];
+                                if (a.Length > 9)
+                                {
+                                    if (a[8].All(char.IsNumber))
+                                    {
+                                        itm.Tsize = Math.Round((decimal.Parse(a[8]) / 1024 / 1024), 2);
+                                    }
+                                }
                             }
                             else if (dbType == DatabaseType.PSPTheme)
                             {
@@ -263,6 +279,13 @@ namespace NPS
                                 itm.zRif = "";
                                 itm.ContentId = a[4];
                                 DateTime.TryParse(a[5], out itm.lastModifyDate);
+                                if (a.Length > 7)
+                                {
+                                    if (a[6].All(char.IsNumber))
+                                    {
+                                        itm.Tsize = Math.Round((decimal.Parse(a[6]) / 1024 / 1024), 2);
+                                    }
+                                }
                             }
 
                             // PS3
@@ -272,6 +295,13 @@ namespace NPS
                                 itm.ItsPS3 = true;
 
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                if (a.Length > 9)
+                                {
+                                    if (a[8].All(char.IsNumber))
+                                    {
+                                        itm.Tsize = Math.Round((decimal.Parse(a[8]) / 1024 / 1024),2);
+                                    }
+                                }
                             }
                             else if (dbType == DatabaseType.PS3Avatar)
                             {
@@ -288,6 +318,13 @@ namespace NPS
                                 itm.IsDLC = true;
 
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                if (a.Length > 9)
+                                {
+                                    if (a[8].All(char.IsNumber))
+                                    {
+                                        itm.Tsize = Math.Round((decimal.Parse(a[8]) / 1024 / 1024), 2);
+                                    }
+                                }
                             }
                             else if (dbType == DatabaseType.PS3Theme)
                             {
@@ -296,6 +333,13 @@ namespace NPS
                                 itm.IsTheme = true;
 
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                if (a.Length > 9)
+                                {
+                                    if (a[8].All(char.IsNumber))
+                                    {
+                                        itm.Tsize = Math.Round((decimal.Parse(a[8]) / 1024 / 1024), 2);
+                                    }
+                                }
                             }
 
                             // PS4
@@ -342,6 +386,13 @@ namespace NPS
 
                                 itm.ContentId = null;
                                 DateTime.TryParse(a[6], out itm.lastModifyDate);
+                                if (a.Length > 8)
+                                {
+                                    if (a[7].All(char.IsNumber))
+                                    {
+                                        itm.Tsize = Math.Round((decimal.Parse(a[7]) / 1024 / 1024), 2);
+                                    }
+                                }
                             }
                             else if (dbType == DatabaseType.ItsPSX)
                             {
@@ -351,6 +402,13 @@ namespace NPS
                                 itm.zRif = "";
                                 itm.ContentId = a[4];
                                 DateTime.TryParse(a[5], out itm.lastModifyDate);
+                                if (a.Length > 8)
+                                {
+                                    if (a[7].All(char.IsNumber))
+                                    {
+                                        itm.Tsize = Math.Round((decimal.Parse(a[7]) / 1024 / 1024), 2);
+                                    }
+                                }
                             }
 
                             if ((itm.pkg.ToLower().Contains("http://") || itm.pkg.ToLower().Contains("https://")) && !itm.zRif.ToLower().Contains("missing"))
