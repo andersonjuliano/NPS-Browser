@@ -1371,7 +1371,19 @@ namespace NPS
                     {
                         if (itm.TitleId.Equals(d))
                         {
-                            pathNew += itm.TitleName + " [" + itm.TitleId + "]";
+                            String Name = itm.TitleName;
+                            Name = Name.Replace(":", "-");
+                            Name = Name.Replace("*", " ");
+                            Name = Name.Replace("<", "-");
+                            Name = Name.Replace(">", "-");
+                            Name = Name.Replace("/", "-");
+                            Name = Name.Replace("\\", "-");
+                            Name = Name.Replace("|", "-");
+                            Name = Name.Replace("?", "-");
+                            Name = Name.Replace("\"", "");
+                            
+
+                            pathNew += Name + " [" + itm.TitleId + "]";
                             Directory.Move(s, pathNew);                           
                         }
                     }
