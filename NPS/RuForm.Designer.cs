@@ -38,6 +38,7 @@ namespace NPS
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sincronizarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ts_changeLog = new System.Windows.Forms.ToolStripMenuItem();
+            this.renameGamesFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.downloadUpdateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,6 +85,8 @@ namespace NPS
             this.splMain = new System.Windows.Forms.SplitContainer();
             this.splList = new System.Windows.Forms.SplitContainer();
             this.pnlSearch = new System.Windows.Forms.Panel();
+            this.cmbType = new PresentationControls.CheckBoxComboBox();
+            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.lblCount = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -106,6 +109,11 @@ namespace NPS
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
+            this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -114,13 +122,6 @@ namespace NPS
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.timer3 = new System.Windows.Forms.Timer(this.components);
-            this.cmbType = new PresentationControls.CheckBoxComboBox();
-            this.cmbRegion = new PresentationControls.CheckBoxComboBox();
-            this.lstDownloadStatus = new ListViewEmbeddedControls.ListViewEx();
-            this.colDownloadTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDownloadSpeed = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDownloadStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colDownloadProgress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mnuMain.SuspendLayout();
             this.lstTitlesMenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCover)).BeginInit();
@@ -171,6 +172,7 @@ namespace NPS
             this.reloadToolStripMenuItem,
             this.sincronizarToolStripMenuItem,
             this.ts_changeLog,
+            this.renameGamesFolderToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -181,7 +183,7 @@ namespace NPS
             // 
             this.optionsToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_options;
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
             // 
@@ -189,34 +191,42 @@ namespace NPS
             // 
             this.reloadToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_reload;
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.reloadToolStripMenuItem.Text = "Sync cache";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.Sync);
             // 
             // sincronizarToolStripMenuItem
             // 
             this.sincronizarToolStripMenuItem.Name = "sincronizarToolStripMenuItem";
-            this.sincronizarToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.sincronizarToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.sincronizarToolStripMenuItem.Text = "Sync Games";
             this.sincronizarToolStripMenuItem.Click += new System.EventHandler(this.sincronizarToolStripMenuItem_Click);
             // 
             // ts_changeLog
             // 
             this.ts_changeLog.Name = "ts_changeLog";
-            this.ts_changeLog.Size = new System.Drawing.Size(138, 22);
+            this.ts_changeLog.Size = new System.Drawing.Size(189, 22);
             this.ts_changeLog.Text = "Changelog";
             this.ts_changeLog.Click += new System.EventHandler(this.ts_changeLog_Click);
+            // 
+            // renameGamesFolderToolStripMenuItem
+            // 
+            this.renameGamesFolderToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_unpack;
+            this.renameGamesFolderToolStripMenuItem.Name = "renameGamesFolderToolStripMenuItem";
+            this.renameGamesFolderToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.renameGamesFolderToolStripMenuItem.Text = "Rename games folder";
+            this.renameGamesFolderToolStripMenuItem.Click += new System.EventHandler(this.renameGamesFolderToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(135, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_exit;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.exitToolStripMenuItem.Tag = "Exit";
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
@@ -234,14 +244,14 @@ namespace NPS
             // downloadToolStripMenuItem
             // 
             this.downloadToolStripMenuItem.Name = "downloadToolStripMenuItem";
-            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.downloadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.downloadToolStripMenuItem.Text = "Download";
             this.downloadToolStripMenuItem.Click += new System.EventHandler(this.downloadUpdateToolStripMenuItem_Click);
             // 
             // changelogToolStripMenuItem
             // 
             this.changelogToolStripMenuItem.Name = "changelogToolStripMenuItem";
-            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.changelogToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.changelogToolStripMenuItem.Text = "Changelog";
             this.changelogToolStripMenuItem.Click += new System.EventHandler(this.changelogToolStripMenuItem_Click);
             // 
@@ -417,7 +427,7 @@ namespace NPS
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearch.Location = new System.Drawing.Point(3, 3);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(541, 20);
+            this.txtSearch.Size = new System.Drawing.Size(507, 20);
             this.txtSearch.TabIndex = 2;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
@@ -501,13 +511,13 @@ namespace NPS
             this.retryUnpackToolStripMenuItem,
             this.clearCompletedToolStripMenuItem});
             this.lstDownloadStatusMenuStrip.Name = "contextMenuStrip1";
-            this.lstDownloadStatusMenuStrip.Size = new System.Drawing.Size(181, 138);
+            this.lstDownloadStatusMenuStrip.Size = new System.Drawing.Size(164, 116);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_pause;
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
@@ -516,7 +526,7 @@ namespace NPS
             this.resumeToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_resume;
             this.resumeToolStripMenuItem.Margin = new System.Windows.Forms.Padding(1);
             this.resumeToolStripMenuItem.Name = "resumeToolStripMenuItem";
-            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.resumeToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.resumeToolStripMenuItem.Text = "Resume";
             this.resumeToolStripMenuItem.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
             // 
@@ -524,7 +534,7 @@ namespace NPS
             // 
             this.cancelToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_cancel;
             this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
-            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.cancelToolStripMenuItem.Text = "Cancel";
             this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
             // 
@@ -532,7 +542,7 @@ namespace NPS
             // 
             this.retryUnpackToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_retry;
             this.retryUnpackToolStripMenuItem.Name = "retryUnpackToolStripMenuItem";
-            this.retryUnpackToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.retryUnpackToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.retryUnpackToolStripMenuItem.Text = "Retry Unpack";
             this.retryUnpackToolStripMenuItem.Click += new System.EventHandler(this.retryUnpackToolStripMenuItem_Click);
             // 
@@ -540,7 +550,7 @@ namespace NPS
             // 
             this.clearCompletedToolStripMenuItem.Image = global::NPS.Properties.Resources.menu_clear;
             this.clearCompletedToolStripMenuItem.Name = "clearCompletedToolStripMenuItem";
-            this.clearCompletedToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.clearCompletedToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.clearCompletedToolStripMenuItem.Text = "Clear Completed";
             this.clearCompletedToolStripMenuItem.Click += new System.EventHandler(this.clearCompletedToolStripMenuItem_Click);
             // 
@@ -638,6 +648,36 @@ namespace NPS
             this.pnlSearch.Name = "pnlSearch";
             this.pnlSearch.Size = new System.Drawing.Size(884, 52);
             this.pnlSearch.TabIndex = 17;
+            // 
+            // cmbType
+            // 
+            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            checkBoxProperties1.AutoSize = true;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbType.CheckBoxProperties = checkBoxProperties1;
+            this.cmbType.DisplayMemberSingleItem = "";
+            this.cmbType.FormattingEnabled = true;
+            this.cmbType.Location = new System.Drawing.Point(516, 3);
+            this.cmbType.MaxDropDownItems = 10;
+            this.cmbType.MaxLength = 300;
+            this.cmbType.Name = "cmbType";
+            this.cmbType.Size = new System.Drawing.Size(198, 21);
+            this.cmbType.TabIndex = 20;
+            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
+            // 
+            // cmbRegion
+            // 
+            this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            checkBoxProperties2.AutoSize = true;
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
+            this.cmbRegion.DisplayMemberSingleItem = "";
+            this.cmbRegion.FormattingEnabled = true;
+            this.cmbRegion.Location = new System.Drawing.Point(720, 3);
+            this.cmbRegion.MaxDropDownItems = 5;
+            this.cmbRegion.Name = "cmbRegion";
+            this.cmbRegion.Size = new System.Drawing.Size(161, 21);
+            this.cmbRegion.TabIndex = 19;
             // 
             // flowLayoutPanel3
             // 
@@ -907,6 +947,44 @@ namespace NPS
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.resumeToolStripMenuItem_Click);
             // 
+            // lstDownloadStatus
+            // 
+            this.lstDownloadStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colDownloadTitle,
+            this.colDownloadSpeed,
+            this.colDownloadStatus,
+            this.colDownloadProgress});
+            this.lstDownloadStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstDownloadStatus.FullRowSelect = true;
+            this.lstDownloadStatus.HideSelection = false;
+            this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
+            this.lstDownloadStatus.Name = "lstDownloadStatus";
+            this.lstDownloadStatus.Size = new System.Drawing.Size(1097, 255);
+            this.lstDownloadStatus.TabIndex = 14;
+            this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
+            this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
+            this.lstDownloadStatus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstDownloadStatus_KeyDown);
+            // 
+            // colDownloadTitle
+            // 
+            this.colDownloadTitle.Text = "Title";
+            this.colDownloadTitle.Width = 457;
+            // 
+            // colDownloadSpeed
+            // 
+            this.colDownloadSpeed.Text = "Speed";
+            this.colDownloadSpeed.Width = 112;
+            // 
+            // colDownloadStatus
+            // 
+            this.colDownloadStatus.Text = "Status";
+            this.colDownloadStatus.Width = 100;
+            // 
+            // colDownloadProgress
+            // 
+            this.colDownloadProgress.Text = "Progress";
+            this.colDownloadProgress.Width = 366;
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.panel3);
@@ -979,72 +1057,6 @@ namespace NPS
             // timer3
             // 
             this.timer3.Interval = 1000;
-            // 
-            // cmbType
-            // 
-            this.cmbType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties1.AutoSize = true;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbType.CheckBoxProperties = checkBoxProperties1;
-            this.cmbType.DisplayMemberSingleItem = "";
-            this.cmbType.FormattingEnabled = true;
-            this.cmbType.Location = new System.Drawing.Point(548, 3);
-            this.cmbType.Name = "cmbType";
-            this.cmbType.Size = new System.Drawing.Size(166, 21);
-            this.cmbType.TabIndex = 20;
-            this.cmbType.SelectedIndexChanged += new System.EventHandler(this.cmbType_SelectedIndexChanged);
-            // 
-            // cmbRegion
-            // 
-            this.cmbRegion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            checkBoxProperties2.AutoSize = true;
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cmbRegion.CheckBoxProperties = checkBoxProperties2;
-            this.cmbRegion.DisplayMemberSingleItem = "";
-            this.cmbRegion.FormattingEnabled = true;
-            this.cmbRegion.Location = new System.Drawing.Point(720, 3);
-            this.cmbRegion.MaxDropDownItems = 5;
-            this.cmbRegion.Name = "cmbRegion";
-            this.cmbRegion.Size = new System.Drawing.Size(161, 21);
-            this.cmbRegion.TabIndex = 19;
-            // 
-            // lstDownloadStatus
-            // 
-            this.lstDownloadStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colDownloadTitle,
-            this.colDownloadSpeed,
-            this.colDownloadStatus,
-            this.colDownloadProgress});
-            this.lstDownloadStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstDownloadStatus.FullRowSelect = true;
-            this.lstDownloadStatus.HideSelection = false;
-            this.lstDownloadStatus.Location = new System.Drawing.Point(0, 0);
-            this.lstDownloadStatus.Name = "lstDownloadStatus";
-            this.lstDownloadStatus.Size = new System.Drawing.Size(1097, 255);
-            this.lstDownloadStatus.TabIndex = 14;
-            this.lstDownloadStatus.UseCompatibleStateImageBehavior = false;
-            this.lstDownloadStatus.View = System.Windows.Forms.View.Details;
-            this.lstDownloadStatus.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstDownloadStatus_KeyDown);
-            // 
-            // colDownloadTitle
-            // 
-            this.colDownloadTitle.Text = "Title";
-            this.colDownloadTitle.Width = 457;
-            // 
-            // colDownloadSpeed
-            // 
-            this.colDownloadSpeed.Text = "Speed";
-            this.colDownloadSpeed.Width = 112;
-            // 
-            // colDownloadStatus
-            // 
-            this.colDownloadStatus.Text = "Status";
-            this.colDownloadStatus.Width = 100;
-            // 
-            // colDownloadProgress
-            // 
-            this.colDownloadProgress.Text = "Progress";
-            this.colDownloadProgress.Width = 366;
             // 
             // NPSBrowser
             // 
@@ -1192,6 +1204,7 @@ namespace NPS
         private System.Windows.Forms.ColumnHeader colSize;
         private System.Windows.Forms.ToolStripMenuItem openDirgameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openDirDLCsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem renameGamesFolderToolStripMenuItem;
     }
 }
 

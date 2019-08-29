@@ -9,7 +9,8 @@ namespace NPS
     [System.Serializable]
     public class Item : IEquatable<Item>
     {
-        public string TitleId, Region, TitleName, zRif, pkg, Tsize;
+        public string TitleId, Region, TitleName, zRif, pkg;//, Tsize;
+        public decimal Tsize;
         public string down = "N";
         public string downDLC = "N";
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
