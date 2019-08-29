@@ -9,6 +9,9 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
+using Microsoft.VisualBasic.FileIO;
+
+
 
 namespace NPS
 {
@@ -353,13 +356,28 @@ namespace NPS
         {
             try
             {
-                string path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + currentDownload.TitleId;
-                if (Directory.Exists(path))
+                
+                if (!currentDownload.IsDLC)
                 {
-                    string pathNew = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + currentDownload.TitleName + " [" + currentDownload.TitleId + "]";
-                    Directory.Move(path, pathNew);
-
+                    string path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + currentDownload.TitleId;
+                    if (Directory.Exists(path))
+                    {
+                        //string pathNew = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + currentDownload.TitleName + " [" + currentDownload.TitleId + "]";
+                        string pathNew = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "app" + Path.DirectorySeparatorChar + currentDownload.FolderGame;
+                        Directory.Move(path, pathNew);
+                    }
                 }
+                else if (currentDownload.IsDLC)
+                {
+                    string path = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "addcont" + Path.DirectorySeparatorChar + currentDownload.TitleId;
+                    if (Directory.Exists(path))
+                    {                        
+                        string pathNew = Settings.Instance.downloadDir + Path.DirectorySeparatorChar + "addcont" + Path.DirectorySeparatorChar + currentDownload.FolderGame;
+                        //Directory.Move(path, pathNew);
+                        FileSystem.MoveDirectory(path, pathNew, true);                        
+                    }
+                }
+
 
             }
             catch (Exception err)

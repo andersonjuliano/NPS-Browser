@@ -124,15 +124,15 @@ namespace NPS
                     foreach (var itm in db)
                     {
                         if (!itm.IsDLC)
-                            if (itm.TitleId.Equals(d))
+                            if (itm.FolderGame.Equals(d))
                             {
                                 bool SD = false;
                                 string Nname = itm.TitleName + "\n\r" + itm.TitleId + "\n\r" + itm.Tsize + " MB";
                                 if (itm.DLCs > 0)
                                 {
-                                    if (Directory.Exists(SourcePathDLC + "\\" + itm.TitleId))
+                                    if (Directory.Exists(SourcePathDLC + "\\" + itm.FolderGame))
                                     {
-                                        Nname += "\n\r" + Directory.GetDirectories(SourcePathDLC + "\\" + itm.TitleId).Length + "/" + itm.DLCs + " DLC";
+                                        Nname += "\n\r" + Directory.GetDirectories(SourcePathDLC + "\\" + itm.FolderGame).Length + "/" + itm.DLCs + " DLC";
                                     }
                                     else
                                     {
@@ -150,13 +150,13 @@ namespace NPS
                                     }
                                     if (itm.DLCs > 0)
                                     {
-                                        if (Directory.Exists(DestinationPathDLC + "\\" + itm.TitleId))
+                                        if (Directory.Exists(DestinationPathDLC + "\\" + itm.FolderGame))
                                         {
                                             //if (Directory.GetDirectories(SourcePathDLC + itm.TitleId).Length == itm.DLCs)
-                                            int i = Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Length;
-                                            if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_pfs"))
+                                            int i = Directory.GetDirectories(DestinationPathDLC + "\\" + itm.FolderGame).Length;
+                                            if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.FolderGame).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_pfs"))
                                                 i -= 1;
-                                            if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_sys"))
+                                            if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.FolderGame).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_sys"))
                                                 i -= 1;
                                             Nname += " / " + i + " DLC";
                                         }
@@ -500,5 +500,6 @@ namespace NPS
         public Item itm;
         public bool isPkg = false;
         public string path;
+        public bool DLC = false;
     }
 }

@@ -47,6 +47,29 @@ namespace NPS
             }
         }
 
+        public string FolderGame
+        {
+            get
+            {
+                String Name = TitleName;
+                if (IsDLC)
+                    Name = ParentGameTitle;
+
+                Name = Name.Replace(":", "-");
+                Name = Name.Replace("*", " ");
+                Name = Name.Replace("<", "-");
+                Name = Name.Replace(">", "-");
+                Name = Name.Replace("/", "-");
+                Name = Name.Replace("\\", "-");
+                Name = Name.Replace("|", "-");
+                Name = Name.Replace("?", "-");
+                Name = Name.Replace("\"", "");
+                Name = Name + " [" + TitleId + "]";
+
+                return Name;
+            }
+        }
+
         public Item() { }
 
 
