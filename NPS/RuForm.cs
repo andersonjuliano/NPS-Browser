@@ -20,6 +20,7 @@ namespace NPS
     public partial class NPSBrowser : Form
     {
         public const string version = "0.94"; //Dyrqrap
+        public const string version2 = "0.94.01"; //Anderson Juliano
         List<Item> currentDatabase = new List<Item>();
 
         List<Item> databaseAll = new List<Item>();
@@ -39,7 +40,7 @@ namespace NPS
         public NPSBrowser()
         {
             InitializeComponent();
-            this.Text += " " + version;
+            this.Text += " " + version2;
             this.Icon = Properties.Resources._8_512;
             new Settings();
 
@@ -107,6 +108,9 @@ namespace NPS
                 databaseAll = g;
                 var dlcsDbs = GetDatabase("DLC").ToArray();
 
+
+                //verifica os jogos e DLC que estão na biblioteca e marca eles como já baixados
+                //também faz o download do cover e grava no arquivo de cache para carregar na biblioteca
                 string[] apps = new string[0];
                 if (Directory.Exists(Settings.Instance.downloadDir + "\\app"))
                 {
@@ -116,7 +120,9 @@ namespace NPS
                 {
                     foreach (var item in databaseAll)
                     {
-                        if (apps.Contains(Settings.Instance.downloadDir + "\\app\\" + item.TitleId))
+                        //verifica se já foi feito o download do jogo para a biblioteca
+                        //if (apps.Contains(Settings.Instance.downloadDir + "\\app\\" + item.TitleId))
+                        if (apps.Contains(Settings.Instance.downloadDir + "\\app\\" + item.FolderGame))
                         {
                             item.down = "S";
                             Task.Run(() =>
@@ -131,14 +137,15 @@ namespace NPS
                                 }
                             });
                         }
-                        //verifica se tem DLC no disco
-                        if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont\\" + item.TitleId))
+                        //verifica se já foi feito o download do DLC para a biblioteca                        
+                        //if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont\\" + item.TitleId))
+                        if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont\\" + item.FolderGame))
                         {
                             //pega o total de DLC
                             if (!item.IsAvatar && !item.IsDLC && !item.IsTheme && !item.IsUpdate && !item.ItsPsx)
                                 item.CalculateDlCs(dlcsDbs);
                             //se tiver todos os DLC, marca como OK
-                            if (Directory.GetDirectories(Settings.Instance.downloadDir + "\\addcont\\" + item.TitleId).Length == item.DLCs)
+                            if (Directory.GetDirectories(Settings.Instance.downloadDir + "\\addcont\\" + item.FolderGame).Length == item.DLCs)
                             {
                                 item.downDLC = "S";
                             }
@@ -763,6 +770,12 @@ namespace NPS
                 {
                     item.Selected = true;
                 }
+            }
+            else if (e.KeyCode == Keys.C && e.Control)
+            {
+                ListViewItem item = lstTitles.SelectedItems[0];
+                Clipboard.SetText(item.SubItems[2].Text + " PSVITA");            
+
             }
         }
 

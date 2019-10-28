@@ -382,8 +382,9 @@ namespace NPS
             }
             catch (Exception err)
             {
-                lvi.SubItems[1].Text = "Error!";
-                lvi.SubItems[2].Text = err.Message;
+                //implementar um log de erro
+                //lvi.SubItems[1].Text = "Error!";
+                //lvi.SubItems[2].Text = err.Message;
             }
         }
 
