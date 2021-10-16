@@ -9,7 +9,8 @@ namespace NPS
     [System.Serializable]
     public class Item : IEquatable<Item>
     {
-        public string TitleId, Region, TitleName, zRif, pkg, Tsize;
+        public string TitleId, Region, TitleName, zRif, pkg;//, Tsize;
+        public decimal Tsize;
         public string down = "N";
         public string downDLC = "N";
         public System.DateTime lastModifyDate = System.DateTime.MinValue;
@@ -43,6 +44,29 @@ namespace NPS
                 string regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
                 Regex r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
                 return r.Replace(res, "");
+            }
+        }
+
+        public string FolderGame
+        {
+            get
+            {
+                String Name = TitleName;
+                if (IsDLC)
+                    Name = ParentGameTitle;
+
+                Name = Name.Replace(":", "-");
+                Name = Name.Replace("*", " ");
+                Name = Name.Replace("<", "-");
+                Name = Name.Replace(">", "-");
+                Name = Name.Replace("/", "-");
+                Name = Name.Replace("\\", "-");
+                Name = Name.Replace("|", "-");
+                Name = Name.Replace("?", "-");
+                Name = Name.Replace("\"", "");
+                Name = Name + " [" + TitleId + "]";
+
+                return Name;
             }
         }
 

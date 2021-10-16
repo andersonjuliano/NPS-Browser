@@ -52,12 +52,12 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pastaRoms = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.sd2vita = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
+            this.btnCopyGame = new System.Windows.Forms.Button();
             this.listView2 = new System.Windows.Forms.ListView();
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button7 = new System.Windows.Forms.Button();
@@ -192,13 +192,13 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // textBox1
+            // pastaRoms
             // 
-            this.textBox1.Location = new System.Drawing.Point(5, 25);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(407, 20);
-            this.textBox1.TabIndex = 6;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.pastaRoms.Location = new System.Drawing.Point(5, 25);
+            this.pastaRoms.Name = "pastaRoms";
+            this.pastaRoms.Size = new System.Drawing.Size(407, 20);
+            this.pastaRoms.TabIndex = 6;
+            this.pastaRoms.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label2
             // 
@@ -209,18 +209,19 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "SD:";
             // 
-            // textBox2
+            // sd2vita
             // 
-            this.textBox2.Location = new System.Drawing.Point(510, 25);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(32, 20);
-            this.textBox2.TabIndex = 8;
-            this.textBox2.Text = "F";
+            this.sd2vita.Location = new System.Drawing.Point(510, 25);
+            this.sd2vita.MaxLength = 1;
+            this.sd2vita.Name = "sd2vita";
+            this.sd2vita.Size = new System.Drawing.Size(51, 21);
+            this.sd2vita.TabIndex = 8;
+            this.sd2vita.TextChanged += new System.EventHandler(this.sd2vita_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(548, 29);
+            this.label3.Location = new System.Drawing.Point(567, 29);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(35, 13);
             this.label3.TabIndex = 9;
@@ -235,18 +236,18 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "label4";
             // 
-            // button6
+            // btnCopyGame
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Image = global::NPS.Properties.Resources.menu_download;
-            this.button6.Location = new System.Drawing.Point(956, 289);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(73, 42);
-            this.button6.TabIndex = 11;
-            this.button6.Text = "Copy Game";
-            this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.btnCopyGame.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyGame.Image = global::NPS.Properties.Resources.menu_download;
+            this.btnCopyGame.Location = new System.Drawing.Point(956, 289);
+            this.btnCopyGame.Name = "btnCopyGame";
+            this.btnCopyGame.Size = new System.Drawing.Size(73, 42);
+            this.btnCopyGame.TabIndex = 11;
+            this.btnCopyGame.Text = "Copy Game";
+            this.btnCopyGame.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCopyGame.UseVisualStyleBackColor = true;
+            this.btnCopyGame.Click += new System.EventHandler(this.btnCopyGame_Click);
             // 
             // listView2
             // 
@@ -291,12 +292,12 @@
             this.ClientSize = new System.Drawing.Size(1033, 653);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.listView2);
-            this.Controls.Add(this.button6);
+            this.Controls.Add(this.btnCopyGame);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.sd2vita);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.pastaRoms);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
@@ -324,12 +325,12 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox pastaRoms;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.ComboBox sd2vita;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnCopyGame;
         private System.Windows.Forms.ListView listView2;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Button button7;

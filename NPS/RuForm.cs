@@ -13,12 +13,14 @@ using System.Globalization;
 using System.Security.Cryptography;
 using System.Xml;
 using System.Text.RegularExpressions;
+using Microsoft.VisualBasic.FileIO;
 
 namespace NPS
 {
     public partial class NPSBrowser : Form
     {
         public const string version = "0.94"; //Dyrqrap
+        public const string version2 = "0.94.01"; //Anderson Juliano
         List<Item> currentDatabase = new List<Item>();
 
         List<Item> databaseAll = new List<Item>();
@@ -38,11 +40,11 @@ namespace NPS
         public NPSBrowser()
         {
             InitializeComponent();
-            this.Text += " " + version;
+            this.Text += " " + version2;
             this.Icon = Properties.Resources._8_512;
             new Settings();
 
-            if (string.IsNullOrEmpty(Settings.Instance.PSVUri) && string.IsNullOrEmpty(Settings.Instance.PSVDLCUri))
+            if (string.IsNullOrEmpty(Settings.Instance.PSVUri) || string.IsNullOrEmpty(Settings.Instance.PSVDLCUri) || string.IsNullOrEmpty(Settings.Instance.downloadDir) )
             {
                 MessageBox.Show("Application did not provide any links to external files or decrypt mechanism.\r\nYou need to specify tsv (tab splitted text) file with your personal links to pkg files on your own.\r\n\r\nFormat: TitleId Region Name Pkg Key", "Disclaimer!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Options o = new Options(this);
@@ -106,6 +108,9 @@ namespace NPS
                 databaseAll = g;
                 var dlcsDbs = GetDatabase("DLC").ToArray();
 
+
+                //verifica os jogos e DLC que estão na biblioteca e marca eles como já baixados
+                //também faz o download do cover e grava no arquivo de cache para carregar na biblioteca
                 string[] apps = new string[0];
                 if (Directory.Exists(Settings.Instance.downloadDir + "\\app"))
                 {
@@ -115,7 +120,9 @@ namespace NPS
                 {
                     foreach (var item in databaseAll)
                     {
-                        if (apps.Contains(Settings.Instance.downloadDir + "\\app\\" + item.TitleId))
+                        //verifica se já foi feito o download do jogo para a biblioteca
+                        //if (apps.Contains(Settings.Instance.downloadDir + "\\app\\" + item.TitleId))
+                        if (apps.Contains(Settings.Instance.downloadDir + "\\app\\" + item.FolderGame))
                         {
                             item.down = "S";
                             Task.Run(() =>
@@ -130,14 +137,15 @@ namespace NPS
                                 }
                             });
                         }
-                        //verifica se tem DLC no disco
-                        if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont\\" + item.TitleId))
+                        //verifica se já foi feito o download do DLC para a biblioteca                        
+                        //if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont\\" + item.TitleId))
+                        if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont\\" + item.FolderGame))
                         {
                             //pega o total de DLC
                             if (!item.IsAvatar && !item.IsDLC && !item.IsTheme && !item.IsUpdate && !item.ItsPsx)
                                 item.CalculateDlCs(dlcsDbs);
                             //se tiver todos os DLC, marca como OK
-                            if (Directory.GetDirectories(Settings.Instance.downloadDir + "\\addcont\\" + item.TitleId).Length == item.DLCs)
+                            if (Directory.GetDirectories(Settings.Instance.downloadDir + "\\addcont\\" + item.FolderGame).Length == item.DLCs)
                             {
                                 item.downDLC = "S";
                             }
@@ -208,6 +216,8 @@ namespace NPS
 
             foreach (string s in types)
                 cmbType.Items.Add(s);
+
+                   
 
             foreach (string s in regions)
                 cmbRegion.Items.Add(s);
@@ -350,7 +360,11 @@ namespace NPS
                     a.SubItems.Add(item.lastModifyDate.ToString());
                 else a.SubItems.Add("");
                 a.SubItems.Add(item.down);
-                a.SubItems.Add(item.Tsize);
+                a.SubItems.Add(item.Tsize.ToString());
+
+                //if (item.Tsize > 0)
+                //    a.SubItems.Add(item.Tsize.ToString());
+                //else a.SubItems.Add("");
 
                 a.Tag = item;
                 list.Add(a);
@@ -756,6 +770,12 @@ namespace NPS
                 {
                     item.Selected = true;
                 }
+            }
+            else if (e.KeyCode == Keys.C && e.Control)
+            {
+                ListViewItem item = lstTitles.SelectedItems[0];
+                Clipboard.SetText(item.SubItems[2].Text + " PSVITA");            
+
             }
         }
 
@@ -1293,15 +1313,28 @@ namespace NPS
 
         private void lstTitles_DoubleClick(object sender, EventArgs e)
         {
-            if (Directory.Exists(Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId))
+            if ((lstTitles.SelectedItems[0].Tag as NPS.Item).contentType == "VITA")
             {
-                string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
-                System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+                //primeiro tenta achar pela pasta nome+id
+                if (Directory.Exists(Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).FolderGame))
+                {
+                    string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).FolderGame;
+                    System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+                }
+                else
+                {
+                    //tenta achar pela pasta ID
+                    if (Directory.Exists(Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId))
+                    {
+                        string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
+                        System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Game não encontrado.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
             }
-            else
-            {
-                MessageBox.Show("Game não encontrado.");
-            }            
         }
 
         private void openDirgameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1344,6 +1377,57 @@ namespace NPS
                 openDirDLCsToolStripMenuItem.Enabled = false;
             }
 
+        }
+
+        private void renameGamesFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {        
+            string[] apps = new string[0];
+            if (Directory.Exists(Settings.Instance.downloadDir + "\\app"))
+            {
+                apps = Directory.GetDirectories(Settings.Instance.downloadDir + "\\app");
+                foreach (string s in apps)
+                {
+                    string d = Path.GetFullPath(s).TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar).Last();
+                    string pathNew = s.Replace(d, "");
+
+                    foreach (var itm in currentDatabase)
+                    {
+                        if (!itm.IsDLC)
+                        {
+                            if (itm.TitleId.Equals(d))
+                            {
+                                pathNew += itm.FolderGame;
+                                Directory.Move(s, pathNew);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (Directory.Exists(Settings.Instance.downloadDir + "\\addcont"))
+            {
+                apps = Directory.GetDirectories(Settings.Instance.downloadDir + "\\addcont");
+                foreach (string s in apps)
+                {
+                    string d = Path.GetFullPath(s).TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar).Last();
+                    string pathNew = s.Replace(d, "");
+
+                    foreach (var itm in currentDatabase)
+                    {
+                        //if (itm.IsDLC)
+                        //{
+                        if (itm.TitleId.Equals(d))
+                        {
+                            pathNew += itm.FolderGame;
+                            //Directory.Move(s, pathNew);
+                            FileSystem.MoveDirectory(s, pathNew, true);
+                        }
+                        //}
+                    }
+                }
+            }
+
+            MessageBox.Show("Todos as pastas de jogos foram renomeadas", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 
