@@ -472,6 +472,7 @@ namespace NPS
             this.btn_ps3dlcuri.TabIndex = 41;
             this.btn_ps3dlcuri.Text = "Browse";
             this.btn_ps3dlcuri.UseVisualStyleBackColor = true;
+            this.btn_ps3dlcuri.Click += new System.EventHandler(this.btn_ps3dlcuri_Click);
             // 
             // lbl_ps3dlcuri
             // 

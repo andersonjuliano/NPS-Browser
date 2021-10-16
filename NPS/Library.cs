@@ -121,73 +121,86 @@ namespace NPS
                     string d = Path.GetFullPath(s).TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar).Last();
 
                     bool found = false;
-                    foreach (var itm in db)
+
+                    var itm = db.Where(x =>
+                                     x.IsDLC == false && (x.TitleId.Equals(d) ||
+                                                            (d.Contains("[")
+                                                             && d.Split('[').Last().Replace("]", "").Equals(x.TitleId)
+                                                            )
+                                                         )
+                                        ).FirstOrDefault();
+
+                    //foreach (var itm in db)
+                    //{
+                    //    if (!itm.IsDLC)
+                    //        if (itm.TitleId.Equals(d))
+                    //        {
+                    if (itm != null)
                     {
-                        if (!itm.IsDLC)
-                            if (itm.TitleId.Equals(d))
+
+                        bool SD = false;
+                        string Nname = itm.TitleName + "\n\r" + itm.TitleId + "\n\r" + itm.Tsize + " MB";
+                        if (itm.DLCs > 0)
+                        {
+                            if (Directory.Exists(SourcePathDLC + "\\" + itm.TitleId))
                             {
-                                bool SD = false;
-                                string Nname = itm.TitleName + "\n\r" + itm.TitleId + "\n\r" + itm.Tsize + " MB";
-                                if (itm.DLCs > 0)
+                                Nname += "\n\r" + Directory.GetDirectories(SourcePathDLC + "\\" + itm.TitleId).Length + "/" + itm.DLCs + " DLC";
+                            }
+                            else
+                            {
+                                Nname += "\n\r" + "0/" + itm.DLCs + " DLC";
+
+                            }
+
+                        }
+                        if (appsSD.Length > 0)
+                        {
+                            if (appsSD.Contains(s.Replace(SourcePath, DestinationPath)))
+                            {
+                                Nname = Nname + "\n\rSD - GAME";
+                                SD = true;
+                            }
+                            if (itm.DLCs > 0)
+                            {
+                                if (Directory.Exists(DestinationPathDLC + "\\" + itm.TitleId))
                                 {
-                                    if (Directory.Exists(SourcePathDLC + "\\" + itm.TitleId))
-                                    {
-                                        Nname += "\n\r" + Directory.GetDirectories(SourcePathDLC + "\\" + itm.TitleId).Length + "/" + itm.DLCs + " DLC";
-                                    }
-                                    else
-                                    {
-                                        Nname += "\n\r" + "0/" + itm.DLCs + " DLC";
-
-                                    }
-
+                                    //if (Directory.GetDirectories(SourcePathDLC + itm.TitleId).Length == itm.DLCs)
+                                    int i = Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Length;
+                                    if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_pfs"))
+                                        i -= 1;
+                                    if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_sys"))
+                                        i -= 1;
+                                    Nname += " / " + i + " DLC";
                                 }
-                                if (appsSD.Length > 0)
-                                {
-                                    if (appsSD.Contains(s.Replace(SourcePath, DestinationPath)))
-                                    {
-                                        Nname = Nname + "\n\rSD - GAME";
-                                        SD = true;
-                                    }
-                                    if (itm.DLCs > 0)
-                                    {
-                                        if (Directory.Exists(DestinationPathDLC + "\\" + itm.TitleId))
-                                        {
-                                            //if (Directory.GetDirectories(SourcePathDLC + itm.TitleId).Length == itm.DLCs)
-                                            int i = Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Length;
-                                            if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_pfs"))
-                                                i -= 1;
-                                            if (Directory.GetDirectories(DestinationPathDLC + "\\" + itm.TitleId).Contains(DestinationPathDLC + "\\" + itm.TitleId + "\\sce_sys"))
-                                                i -= 1;
-                                            Nname += " / " + i + " DLC";
-                                        }
-                                    }
-                                }
+                            }
+                        }
 
-                                ListViewItem lvi = new ListViewItem(Nname);
-                                if (SD)
-                                {
-                                    lvi.BackColor = Color.Yellow;
-                                }
+                        ListViewItem lvi = new ListViewItem(Nname);
+                        if (SD)
+                        {
+                            lvi.BackColor = Color.Yellow;
+                        }
 
 
-                                listView1.Items.Add(lvi);
+                        listView1.Items.Add(lvi);
 
-                                foreach (var r in NPCache.I.renasceneCache)
-                                    if (itm.Equals(r.itm))
-                                    {
-                                        imagesToLoad.Add(r.imgUrl);
-                                        lvi.ImageKey = r.imgUrl;
-                                        break;
-                                    }
-                                LibraryItem library = new LibraryItem();
-                                library.itm = itm;
-                                library.path = s;
-                                library.isPkg = false;
-                                lvi.Tag = library;
-                                found = true;
+                        foreach (var r in NPCache.I.renasceneCache)
+                            if (itm.Equals(r.itm))
+                            {
+                                imagesToLoad.Add(r.imgUrl);
+                                lvi.ImageKey = r.imgUrl;
                                 break;
                             }
+                        LibraryItem library = new LibraryItem();
+                        library.itm = itm;
+                        library.path = s;
+                        library.isPkg = false;
+                        lvi.Tag = library;
+                        found = true;
+                        //break;
                     }
+                    //}
+                    //                    }
 
                     if (!found)
                     {
@@ -367,7 +380,8 @@ namespace NPS
             copyDLC(true);
         }
 
-        private void copyGame() { 
+        private void copyGame()
+        {
             if (listView1.SelectedItems.Count == 0) return;
             if (textBox2.Text == "") return;
             label3.Text = "Wait, copy game " + (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleName;
@@ -411,14 +425,15 @@ namespace NPS
 
 
         }
-        private void copyDLC(Boolean msg) { 
+        private void copyDLC(Boolean msg)
+        {
             string SourcePath = (listView1.SelectedItems[0].Tag as LibraryItem).path.Replace("\\app\\", "\\addcont\\");
             string DestinationPath = textBox2.Text + ":\\addcont\\" + (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleId;
 
             if (listView1.SelectedItems.Count == 0) return;
             if (textBox2.Text == "")
             {
-                if(msg) label3.Text = "Informe o SD";
+                if (msg) label3.Text = "Informe o SD";
                 return;
             }
             if (!Directory.Exists(SourcePath) || Directory.GetDirectories(SourcePath).Length == 0)
@@ -490,7 +505,7 @@ namespace NPS
         private void openDirDLCToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count == 0) return;
-            string path = (listView1.SelectedItems[0].Tag as LibraryItem).path.Replace("\\app\\","\\addcont\\");
+            string path = (listView1.SelectedItems[0].Tag as LibraryItem).path.Replace("\\app\\", "\\addcont\\");
             System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
         }
     }

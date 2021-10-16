@@ -159,6 +159,12 @@ namespace NPS
                         {
                             System.Threading.Thread.Sleep(400);
                             File.Delete(Path.Combine(Settings.Instance.downloadDir, currentDownload.DownloadFileName + currentDownload.extension));
+
+                            string CurrentSourcePath = Settings.Instance.downloadDir + "\\app\\" + currentDownload.TitleId;
+                            string DestinationPath = Settings.Instance.downloadDir + "\\app\\" + $"{currentDownload.TitleName} [{currentDownload.Region}] [{currentDownload.TitleId}]";
+
+                            Directory.Move(CurrentSourcePath, DestinationPath);
+
                         }
                     }
                     catch { i = 5; }
