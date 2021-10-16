@@ -161,8 +161,8 @@ namespace NPS
             {
                 string r = null;
                 if (promomedia.Length > 0)
-                    if (promomedia[0].materials.Length > 0)
-                        if (promomedia[0].materials[0].urls.Length > 0) r = promomedia[0].materials[0].urls[0].url;
+                    if (promomedia[0].materials != null && promomedia[0].materials.Length > 0)
+                        if (promomedia[0].materials[0].urls != null && promomedia[0].materials[0].urls.Length > 0) r = promomedia[0].materials[0].urls[0].url;
                 return r;
             }
         }
@@ -172,8 +172,8 @@ namespace NPS
             {
                 string r = null;
                 if (promomedia.Length > 0)
-                    if (promomedia[0].materials.Length > 1)
-                        if (promomedia[0].materials[1].urls.Length > 0) r = promomedia[0].materials[1].urls[0].url;
+                    if (promomedia[0].materials != null && promomedia[0].materials.Length > 1)
+                        if (promomedia[0].materials[1].urls != null && promomedia[0].materials[1].urls.Length > 0) r = promomedia[0].materials[1].urls[0].url;
                 return r;
             }
         }

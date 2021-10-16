@@ -14,6 +14,7 @@ public class Settings
     // Settings
     public string downloadDir, pkgPath, pkgParams = "-x {pkgFile} \"{zRifKey}\"";
     public bool deleteAfterUnpack = false;
+    public bool vitaGamesFolderRename = false;
     public int simultaneousDl = 2;
 
     // Game URIs
@@ -102,6 +103,12 @@ public class Settings
             if (!string.IsNullOrEmpty(deleteAfterUnpackString))
                 bool.TryParse(deleteAfterUnpackString, out s.deleteAfterUnpack);
             else s.deleteAfterUnpack = true;
+
+            string vitaGamesFolderRenameString = Registry.GetValue(keyName, "vitaGamesFolderRename", false)?.ToString();
+            if (!string.IsNullOrEmpty(vitaGamesFolderRenameString))
+                bool.TryParse(vitaGamesFolderRenameString, out s.vitaGamesFolderRename);
+            else s.vitaGamesFolderRename = true;
+
             string simultanesulString = Registry.GetValue(keyName, "simultaneousDl", 2)?.ToString();
             if (!string.IsNullOrEmpty(simultanesulString))
                 int.TryParse(simultanesulString, out s.simultaneousDl);

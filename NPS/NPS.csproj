@@ -108,6 +108,7 @@
     <Compile Include="Helpers\CustomComponents\PopupComboBox.Designer.cs">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="Helpers\NPCache.cs" />
     <Compile Include="Helpers\History.cs" />
     <Compile Include="Helpers\SimpleJson.cs" />

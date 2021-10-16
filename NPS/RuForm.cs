@@ -141,9 +141,9 @@ namespace NPS
                             {
                                 item.downDLC = "S";
                             }
-                        }                        
+                        }
                     }
-                }              
+                }
 
                 Invoke(new Action(() =>
                 {
@@ -334,7 +334,7 @@ namespace NPS
                     if (newdlc > 0) a.BackColor = ColorTranslator.FromHtml("#E700E7");
                     else a.BackColor = ColorTranslator.FromHtml("#B7FF7C");
                 }
-                if (a.BackColor == ColorTranslator.FromHtml("#E700E7") &&  item.downDLC == "S")
+                if (a.BackColor == ColorTranslator.FromHtml("#E700E7") && item.downDLC == "S")
                 {
                     a.BackColor = ColorTranslator.FromHtml("#B7FF7C");
                 }
@@ -720,16 +720,16 @@ namespace NPS
                     lb_ps3licenseType.Text = "";
                 }
 
-                
+
                 if (itm.ContentId != currentContentId)
                 {
                     currentContentId = itm.ContentId;
                     ShowDescription(itm.ContentId, itm.Region);
                 }
 
-                
+
             }
-          
+
 
         }
 
@@ -1038,7 +1038,7 @@ namespace NPS
 
         }
 
-        
+
         private void button5_Click(object sender, EventArgs e)
         {
             if (lstDownloadStatus.SelectedItems.Count == 0) return;
@@ -1133,7 +1133,7 @@ namespace NPS
 
         }
 
-       
+
 
         private void splList_Panel2_Paint(object sender, PaintEventArgs e)
         {
@@ -1225,10 +1225,10 @@ namespace NPS
 
         #region << load description >>
 
-        string currentContentId;       
+        string currentContentId;
         private void ShowDescription(string contentId, string region)
         {
-            
+
             switch (region)
             {
                 case "EU": region = "GB/en"; break;
@@ -1297,11 +1297,24 @@ namespace NPS
             {
                 string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
                 System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+                return;
             }
             else
             {
-                MessageBox.Show("Game não encontrado.");
-            }            
+                NPS.Item npsItem = (lstTitles.SelectedItems[0].Tag as NPS.Item);
+                if (npsItem != null)
+                {
+                    string DestinationPath = Settings.Instance.downloadDir + "\\app\\" + $"{npsItem.TitleName} [{npsItem.Region}] [{npsItem.TitleId}]";
+                    if (Directory.Exists(DestinationPath))
+                    {
+                        System.Diagnostics.Process.Start("explorer.exe", "/select, " + DestinationPath);
+                        return;
+                    }
+                }
+            }
+
+            // if game dir isnt found
+            MessageBox.Show("Game não encontrado.");
         }
 
         private void openDirgameToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1310,11 +1323,24 @@ namespace NPS
             {
                 string path = Settings.Instance.downloadDir + "\\app\\" + (lstTitles.SelectedItems[0].Tag as NPS.Item).TitleId;
                 System.Diagnostics.Process.Start("explorer.exe", "/select, " + path);
+                return;
             }
             else
             {
-                MessageBox.Show("Game não encontrado.");
+                NPS.Item npsItem = (lstTitles.SelectedItems[0].Tag as NPS.Item);
+                if (npsItem != null)
+                {
+                    string DestinationPath = Settings.Instance.downloadDir + "\\app\\" + $"{npsItem.TitleName} [{npsItem.Region}] [{npsItem.TitleId}]";
+                    if (Directory.Exists(DestinationPath))
+                    {
+                        System.Diagnostics.Process.Start("explorer.exe", "/select, " + DestinationPath);
+                        return;
+                    }
+                }
             }
+
+            // if game dir isnt found
+            MessageBox.Show("Game não encontrado.");
         }
 
         private void openDirDLCsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1335,7 +1361,7 @@ namespace NPS
             openDirgameToolStripMenuItem.Enabled = true;
             openDirDLCsToolStripMenuItem.Enabled = true;
 
-            if ((lstTitles.SelectedItems[0].Tag as NPS.Item).down=="N")
+            if ((lstTitles.SelectedItems[0].Tag as NPS.Item).down == "N")
             {
                 openDirgameToolStripMenuItem.Enabled = false;
             }
