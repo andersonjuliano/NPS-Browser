@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Compression;
+using NPS.Helpers;
 
 namespace NPS
 {
@@ -160,14 +161,24 @@ namespace NPS
                             System.Threading.Thread.Sleep(400);
                             File.Delete(Path.Combine(Settings.Instance.downloadDir, currentDownload.DownloadFileName + currentDownload.extension));
 
-                            string CurrentSourcePath = Settings.Instance.downloadDir + "\\app\\" + currentDownload.TitleId;
-                            string DestinationPath = Settings.Instance.downloadDir + "\\app\\" + $"{currentDownload.TitleName} [{currentDownload.Region}] [{currentDownload.TitleId}]";
-
-                            Directory.Move(CurrentSourcePath, DestinationPath);
-
+                            if (Settings.Instance.vitaGamesFolderRename)
+                            {
+                                if (!(currentDownload.ItsCompPack || currentDownload.ItsPS3 || currentDownload.ItsPS4 || currentDownload.ItsPsp || currentDownload.ItsPsx))
+                                {
+                                    string CurrentSourcePath = Settings.Instance.downloadDir + "\\app\\" + currentDownload.TitleId;
+                                    string DestinationPath = Settings.Instance.downloadDir + "\\app\\" + $"{currentDownload.TitleName.removeIllegalCharsFromPath()} [{currentDownload.Region.removeIllegalCharsFromPath()}] [{currentDownload.TitleId}]";
+                                    Directory.Move(CurrentSourcePath, DestinationPath);
+                                }
+                            }
                         }
                     }
-                    catch { i = 5; }
+                    //catch { i = 5; }
+                    catch (Exception err)
+                    {
+                        //lvi.SubItems[1].Text = "Error!";
+                        //lvi.SubItems[2].Text = err.Message;
+                        i = 5;
+                    }
                 }
             }
         }

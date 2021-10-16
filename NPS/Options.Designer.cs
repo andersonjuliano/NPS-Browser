@@ -112,6 +112,7 @@ namespace NPS
             this.tb_compPack = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.tb_compackPatch = new System.Windows.Forms.TextBox();
+            this.ckbVitaGamesFolderRename = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -939,6 +940,18 @@ namespace NPS
             this.tb_compackPatch.Size = new System.Drawing.Size(344, 20);
             this.tb_compackPatch.TabIndex = 46;
             // 
+            // ckbVitaGamesFolderRename
+            // 
+            this.ckbVitaGamesFolderRename.AutoSize = true;
+            this.ckbVitaGamesFolderRename.Location = new System.Drawing.Point(359, 364);
+            this.ckbVitaGamesFolderRename.Name = "ckbVitaGamesFolderRename";
+            this.ckbVitaGamesFolderRename.Size = new System.Drawing.Size(441, 17);
+            this.ckbVitaGamesFolderRename.TabIndex = 9;
+            this.ckbVitaGamesFolderRename.Text = "Rename vita games downloader folder (after download) to {titleName} [{region}] [{" +
+    "titleId}]";
+            this.ckbVitaGamesFolderRename.UseVisualStyleBackColor = true;
+            this.ckbVitaGamesFolderRename.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // Options
             // 
             this.AutoScroll = true;
@@ -958,6 +971,7 @@ namespace NPS
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.label6);
+            this.Controls.Add(this.ckbVitaGamesFolderRename);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.textParams);
@@ -1083,6 +1097,7 @@ namespace NPS
         private System.Windows.Forms.TextBox tb_compPack;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tb_compackPatch;
+        private System.Windows.Forms.CheckBox ckbVitaGamesFolderRename;
     }
 }
 

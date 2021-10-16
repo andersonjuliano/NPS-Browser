@@ -427,6 +427,9 @@ namespace NPS
         }
         private void copyDLC(Boolean msg)
         {
+            if (listView1.SelectedItems == null || listView1.SelectedItems.Count == 0)
+                return;
+
             string SourcePath = (listView1.SelectedItems[0].Tag as LibraryItem).path.Replace("\\app\\", "\\addcont\\");
             string DestinationPath = textBox2.Text + ":\\addcont\\" + (listView1.SelectedItems[0].Tag as LibraryItem).itm.TitleId;
 

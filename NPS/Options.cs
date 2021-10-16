@@ -35,7 +35,7 @@ namespace NPS
             textPKGPath.Text = Settings.Instance.pkgPath;
             textParams.Text = Settings.Instance.pkgParams;
             checkBox1.Checked = Settings.Instance.deleteAfterUnpack;
-            numericUpDown1.Value = Settings.Instance.simultaneousDl;
+            ckbVitaGamesFolderRename.Checked = Settings.Instance.vitaGamesFolderRename;
 
             // Game URIs
             tb_psvuri.Text = Settings.Instance.PSVUri;
@@ -139,6 +139,7 @@ namespace NPS
             Settings.Instance.pkgPath = textPKGPath.Text;
             Settings.Instance.pkgParams = textParams.Text;
             Settings.Instance.deleteAfterUnpack = checkBox1.Checked;
+            Settings.Instance.vitaGamesFolderRename = ckbVitaGamesFolderRename.Checked;
             Settings.Instance.simultaneousDl = (int)numericUpDown1.Value;
 
             // Game URIs
@@ -276,6 +277,11 @@ namespace NPS
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Instance.deleteAfterUnpack = checkBox1.Checked;
+        }
+
+        private void ckbVitaGamesFolderRename_CheckedChanged(object sender, EventArgs e)
+        {
+            Settings.Instance.vitaGamesFolderRename = ckbVitaGamesFolderRename.Checked;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
